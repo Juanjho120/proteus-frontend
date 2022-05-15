@@ -1,0 +1,6 @@
+<div>
+    <p>¿Eliminar el cheque No {{cheque.numero}} de la cuenta No {{cheque.cuentaBancaria.numero}} del banco {{cheque.cuentaBancaria.banco.nombre}}
+        por un monto de Q. {{cheque.monto.toFixed(2)}}?</p>
+</div>
+<button mat-raised-button color="primary" (click)="eliminar()">Eliminar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>

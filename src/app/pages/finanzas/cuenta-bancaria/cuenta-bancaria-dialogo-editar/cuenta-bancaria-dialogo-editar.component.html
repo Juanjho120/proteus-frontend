@@ -1,0 +1,43 @@
+<div>
+    <form [formGroup]="formCuentaBancaria" #frmCuentaBancaria="ngForm" (ngSubmit)="operar()">
+        <mat-form-field class="mat-form-field-numero" appearance="outline">
+            <mat-label>No de Cuenta</mat-label>
+            <input matInput formControlName="numero" required>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-nombre" appearance="outline">
+            <mat-label>Nombre de Cuenta</mat-label>
+            <textarea matInput formControlName="nombre" required></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mat-form-field-banco">
+            <mat-label>Banco</mat-label>
+            <mat-select [(value)]="idBanco" formControlName="banco" required>
+                <mat-option *ngFor="let b of (bancos$ | async)" [value]="b.idBanco">
+                    {{b.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mat-form-field-cuentaBancariaTipo">
+            <mat-label>Tipo de cuenta</mat-label>
+            <mat-select [(value)]="idCuentaBancariaTipo" formControlName="cuentaBancariaTipo" required>
+                <mat-option *ngFor="let cbt of (cuentaBancariaTipos$ | async)" [value]="cbt.idCuentaBancariaTipo">
+                    {{cbt.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="mat-form-field-moneda">
+            <mat-label>Moneda</mat-label>
+            <mat-select [(value)]="idMoneda" formControlName="moneda" required>
+                <mat-option *ngFor="let m of (monedas$ | async)" [value]="m.idMoneda">
+                    {{m.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmCuentaBancaria.invalid" style="margin-right: 5px;">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

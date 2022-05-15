@@ -1,0 +1,19 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Segmentos</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Ingreso y búsqueda">
+            <div class="segmento-ingreso-busqueda-container" fxLayout="row" dynamicHeight>
+                <div class="segmento-ingreso-busqueda-card-container" dynamicHeight>
+                    <app-segmento-ingreso-busqueda></app-segmento-ingreso-busqueda>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Créditos y pagos">
+            <div class="segmento-credito-pago-container" dynamicHeight>
+                <div class="segmento-credito-pago-card-container" dynamicHeight>
+                    <app-segmento-credito-pago></app-segmento-credito-pago>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

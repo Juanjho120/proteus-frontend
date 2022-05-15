@@ -1,0 +1,127 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <div style="display: flex;">
+            <div style="width: 90%;">
+                <h4><b>Usuarios</b></h4>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" (click)="cargarPermisosUsuario()" type="button">Actualizar Usuarios</button>
+            </div>
+        </div>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourceUsuarios">
+                <ng-container matColumnDef='nombre'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.nombre}} {{row.apellido}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef='username'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='email'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='telefono'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.telefono}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='rol'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rol</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.rol.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='estado'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.estado}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='acciones'>
+                    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="primary" (click)="abrirDialogoEdicionUsuario(row.idUsuario)">
+                            <mat-icon>ballot</mat-icon>
+                        </button>
+                        <button mat-button color="warn" (click)="abrirDialogoEliminarUsuario(row.idUsuario)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsUsuarios; sticky : true"></mat-header-row>
+                <mat-row (click)="seleccionarUsuario(row)" *matRowDef="let row; columns: displayedColumnsUsuarios;"
+                [ngClass]="{'mat-row-selected' : idUsuarioSeleccionado == row.idUsuario}"></mat-row>
+            </mat-table>
+        </div><br>
+        <h4><b>Permisos</b></h4>
+        <div class="tables-container" fxLayoutAlign="space-around start">
+            <div class="mat-table-container">
+                <mat-table [dataSource]="dataSourceVentanasIn" class="mat-table-permisos-in">
+                    <ng-container matColumnDef='nombreP'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Ventanas</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.ventana}}</mat-cell>
+                    </ng-container>
+    
+                    <ng-container matColumnDef='accionesP'>
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button mat-button color="warn" (click)="abrirDialogoEliminarVentana(row)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                    <mat-row (click)="seleccionarVentana(row)" *matRowDef="let row; columns: displayedColumnsNombre;"
+                    [ngClass]="{'mat-row-selected' : idVentanaInSeleccionado == row.idVentana}"></mat-row>
+                </mat-table>
+            </div>
+            <div class="mat-table-container">
+                <mat-table [dataSource]="dataSourceTablasIn" class="mat-table-permisos-in">
+                    <ng-container matColumnDef='nombreP'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Tablas</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.tabla}}</mat-cell>
+                    </ng-container>
+    
+                    <ng-container matColumnDef='accionesP'>
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button mat-button color="warn" (click)="abrirDialogoEliminarTabla(row)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                    <mat-row (click)="seleccionarTabla(row)" *matRowDef="let row; columns: displayedColumnsNombre;"
+                    [ngClass]="{'mat-row-selected' : idTablaInSeleccionado == row.idTabla}"></mat-row>
+                </mat-table>
+            </div>
+            <div class="mat-table-container">
+                <mat-table [dataSource]="dataSourcePermisosIn" class="mat-table-permisos-in">
+                    <ng-container matColumnDef='nombreP'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Permisos</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                    </ng-container>
+    
+                    <ng-container matColumnDef='accionesP'>
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button mat-button color="warn" (click)="abrirDialogoEliminarPermiso(row)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsNombre;"></mat-row>
+                </mat-table>
+            </div>
+        </div><br>
+        <button mat-raised-button color="primary" (click)="agregarPermiso()" type="button" [disabled]="evaluarAgregarPermisoBoton()">Agregar Permiso</button>
+    </mat-card-content>
+</mat-card>

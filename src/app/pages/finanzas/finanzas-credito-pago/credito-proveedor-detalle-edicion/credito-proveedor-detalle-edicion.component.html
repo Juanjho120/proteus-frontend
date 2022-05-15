@@ -1,0 +1,16 @@
+<div>
+    <form [formGroup]="form" #frmCreditoDetalleProveedor="ngForm" (ngSubmit)="editar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Código de factura</mat-label>
+            <input matInput formControlName="facturaCodigo">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Observaciones</mat-label>
+            <textarea matInput formControlName="observaciones" style="text-transform:uppercase;"></textarea>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmCreditoDetalleProveedor.invalid" style="margin-right: 5px;">Editar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

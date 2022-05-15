@@ -1,0 +1,29 @@
+.container {
+    margin: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.inventario-ingreso-busqueda-container {
+    margin: 10px;
+}
+
+.inventario-ingreso-entrada-salida-container {
+    margin: 20px;
+}
+
+.inventario-nuevo-card-container {
+    margin: 15px;
+    width: 43%;
+}
+
+.inventario-busqueda-card-container {
+    margin: 15px;
+    width: 57%;
+}
+
+.inventario-entrada-salida-card-container {
+    margin: 15px;
+    width: 100%;
+}

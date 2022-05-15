@@ -1,0 +1,113 @@
+<mat-card dynamicHeight>
+    <mat-card-header>
+        <mat-card-title>Ingreso de facturas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <span><b>Datos de factura</b></span>
+        <form [formGroup]="formFacturaCompraMenor" #frmFacturaCompraMenor="ngForm">
+            <div class="factura-header">
+                <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                    <mat-label>Proveedor Menor</mat-label>
+                    <mat-select [(value)]="idProveedorMenor" formControlName="proveedorMenor" required>
+                        <mat-option *ngFor="let p of (proveedoresMenores$ | async)" [value]="p.idProveedorMenor">
+                            {{p.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="total-factura-container">
+                    <p class="total-factura-label">Q. {{totalFactura.toFixed(2)}}</p>
+                </div>
+            </div>
+
+            <mat-form-field class="mat-form-field-codigo" appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput required formControlName="codigo">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha" appearance="outline">
+                <mat-label>Fecha</mat-label>
+                <input matInput [matDatepicker]="picker" [max]="maxFecha"
+                    value="fechaSeleccionada" (dateChange)="cambiarFecha($event)" formControlName="fecha">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+                <mat-label>Sucursal</mat-label>
+                <mat-select [(ngModel)]="idSucursal" (selectionChange)="filtrarPorSucursal()" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                        {{s.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="mat-form-field-servicio">
+                <mat-label>Servicio</mat-label>
+                <mat-select [(value)]="idServicio" formControlName="servicio">
+                    <mat-option *ngFor="let s of (servicios$ | async)" [value]="s.idServicio">
+                        {{s.correlativo}} - {{s.placa.numero}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <button mat-flat-button color="primary" type="button" [disabled]="evaluarAgregarFactura()" (click)="agregarFacturaCompra()" style="margin-right: 10px;">Guardar</button>
+                <button mat-flat-button color="primary" type="button" (click)="limpiarControlGeneral()">Nuevo</button>
+            </div><br>
+        </form>
+        <mat-divider></mat-divider>
+        <br>
+        <span><b>Detalles</b></span>
+        <form [formGroup]="formFacturaCompraMenorDetalle" #frmFacturaCompraMenorDetalle="ngForm" (ngSubmit)="agregarFacturaCompraDetalle()">
+            <mat-form-field class="mat-form-field-cantidad" appearance="outline">
+                <mat-label>Cant</mat-label>
+                <input matInput required formControlName="cantidad" type="number" min="0">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-descripcion" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <input matInput required formControlName="descripcion">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-costo input-wrapper" appearance="outline">
+                <mat-label>Costo compra</mat-label>
+                <span class="input-currency">Q.</span>
+                <input matInput required formControlName="costoCompra" type="number" min="0" required step="0.01" (change)="setTwoNumberDecimal($event)">
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmFacturaCompraMenorDetalle.invalid">Agregar</button>
+            
+        </form>
+        <mat-divider></mat-divider>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourceFacturaCompraDetalle">
+                <ng-container matColumnDef='cant'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.cantidad}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='descripcion'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descripcion}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='costoCompra'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Costo</mat-header-cell>
+                    <mat-cell *matCellDef="let row">Q{{row.costoCompra.toFixed(2)}}</mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef='accion'>
+                    <mat-header-cell *matHeaderCellDef>Accion</mat-header-cell>
+                    <mat-cell *matCellDef="let row; let i=index">
+                        <button mat-button color="warn" (click)="removerFacturaCompraMenorDetalle(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

@@ -1,0 +1,105 @@
+<div class="title-container">
+    <h3 style="margin: 0px;"><b>PAGO A {{proveedorNombre}}</b></h3>
+</div>
+<div class="form-pago-container">
+    <form [formGroup]="formPago" #frmPago="ngForm">
+        <mat-form-field appearance="fill" class="mat-form-field-pagoTipo">
+            <mat-label>Tipo de pago</mat-label>
+            <mat-select [(value)]="idPagoTipo" formControlName="pagoTipo" required>
+                <mat-option *ngFor="let pt of (pagoTipos$ | async)" [value]="pt.idPagoTipo">
+                    {{pt.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-observaciones" appearance="outline">
+            <mat-label>Observaciones</mat-label>
+            <textarea matInput formControlName="observaciones" oninput="this.value = this.value.toUpperCase()"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<mat-divider></mat-divider>
+<div class="container">
+    <b>Por pagar</b>
+    <div class="mat-table-facturasPorPagar-container">
+        <mat-table [dataSource]="dataSourceFacturasPorPagar">
+            <ng-container matColumnDef='codigo'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Código de Factura</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.facturaCompra.codigo}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef='fecha'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.facturaCompra.fecha}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef='total'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                <mat-cell *matCellDef="let row">Q. {{row.totalRestante.toFixed(2)}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsFactura; sticky : true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsFactura; let i=index" (click)="removerFacturaPorPagar(i)"></mat-row>
+        </mat-table>
+    </div>
+    <b>A pagar</b>
+    <div class="mat-table-facturasAPagar-container">
+        <mat-table [dataSource]="dataSourceFacturasAPagar">
+            <ng-container matColumnDef='codigo'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Código de Factura</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.facturaCompra.codigo}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef='fecha'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.facturaCompra.fecha}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef='total'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                <mat-cell *matCellDef="let row">Q. {{row.totalRestante.toFixed(2)}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsFactura; sticky : true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsFactura; let i=index" (click)="removerFacturaAPagar(i)"></mat-row>
+        </mat-table>
+    </div>
+    <mat-divider></mat-divider><br>
+    <div class="form-cheque-container">
+        <b>Registro de cheque</b>
+        <form [formGroup]="formCheque" #frmCheque="ngForm">
+            <mat-form-field appearance="fill" class="mat-form-field-cuentaBancaria">
+                <mat-label>Cuenta Bancaria</mat-label>
+                <mat-select [(value)]="idCuentaBancaria" formControlName="cuentaBancaria" required>
+                    <mat-option *ngFor="let cb of (cuentasBancarias$ | async)" [value]="cb.idCuentaBancaria">
+                        {{cb.banco.nombre}} - {{cb.numero}} - {{cb.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-numero" appearance="outline">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="numero" required>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-monto input-wrapper" appearance="outline">
+                <mat-label>Monto</mat-label>
+                <span class="input-currency">Q.</span>
+                <input matInput formControlName="monto" type="number" min="0" step="0.01" required
+                (change)="setTwoNumberDecimal($event)">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fechaEmision" appearance="outline">
+                <mat-label>Fecha de emisión</mat-label>
+                <input matInput [matDatepicker]="pickerEmision" [max]="maxFecha"
+                    value="fechaEmisionSeleccionada" (dateChange)="cambiarFechaEmision($event)" formControlName="fechaEmision" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerEmision"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEmision></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+<br />
+<button mat-raised-button color="primary" style="margin-right: 5px;" [disabled]="evaluarGuardarPagoProveedorBoton()" (click)="guardarPagoProveedor()">Registrar pago</button>
+<button mat-raised-button color="warn" (click)="cerrar()" [disabled]="loaderService.isLoading.value">Cancelar</button>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

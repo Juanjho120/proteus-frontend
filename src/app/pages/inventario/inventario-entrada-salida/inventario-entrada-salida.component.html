@@ -1,0 +1,129 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <p class="por-fechas-label"><b>POR FECHAS</b></p>
+        <section class="section-form-fecha">
+            <form [formGroup]="form" #frmInventarioBusqueda="ngForm" (ngSubmit)="buscar()">
+                <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                    <mat-label>Inicio</mat-label>
+                    <input matInput [matDatepicker]="pickerInicio" [max]="maxFecha"
+                        value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio" required>
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicio></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                    <mat-label>Fin</mat-label>
+                    <input matInput [matDatepicker]="pickerFin" [max]="maxFecha"
+                        value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin" required>
+                    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFin></mat-datepicker>
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscar()">Buscar</button>
+                <button mat-button color="primary" type="button" [disabled]="evaluarBotonReporteInventario()" (click)="crearReporteInventarioEntradaSalida()">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </form>
+        </section>
+        <div class="card-table-container">
+            <mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef='codigo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.codigo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='descripcion'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descripcion}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='entrada'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Entradas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.entrada}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='salida'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Salidas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.salida}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='existencia'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Existencia</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.existencia}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div><br>
+        <p class="por-producto-label"><b>POR PRODUCTO Y FECHAS</b></p>
+        <section class="section-form-producto-fecha">
+            <form [formGroup]="formProducto" #frmProducto="ngForm" (ngSubmit)="buscarProducto()">
+                <mat-form-field class="mat-form-field-repuesto" appearance="outline">
+                    <mat-label>Repuesto</mat-label>
+                    <input type="text" required matInput [matAutocomplete]="autoRepuesto" 
+                        [formControl]="myControlRepuesto" formControlName="repuesto">
+                </mat-form-field>
+                <mat-autocomplete #autoRepuesto="matAutocomplete" [displayWith]="mostrarRepuesto" (optionSelected)="seleccionarRepuesto($event)">
+                    <mat-option *ngFor="let r of repuestosFiltrados$ | async" [value]="r">
+                        {{ r.descripcion }}
+                    </mat-option>
+                </mat-autocomplete>
+    
+                <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                    <mat-label>Inicio</mat-label>
+                    <input matInput [matDatepicker]="pickerInicioProducto" placeholder="Inicio" [max]="maxFecha"
+                        value="fechaInicioProductoSeleccionada" (dateChange)="cambiarFechaInicioProducto($event)" formControlName="fechaInicio" required>
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicioProducto"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicioProducto></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                    <mat-label>Fin</mat-label>
+                    <input matInput [matDatepicker]="pickerFinProducto" placeholder="Fin" [max]="maxFecha"
+                        value="fechaFinProductoSeleccionada" (dateChange)="cambiarFechaFinProducto($event)" formControlName="fechaFin" required>
+                    <mat-datepicker-toggle matSuffix [for]="pickerFinProducto"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFinProducto></mat-datepicker>
+                </mat-form-field>
+    
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscarProducto()">Buscar</button>
+                <button mat-button color="primary" type="button" [disabled]="evaluarBotonReporteProducto()" (click)="crearReporteProductoEntradaSalida()">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </form>
+            
+        </section>
+        <div class="card-table-producto-container">
+            <mat-table [dataSource]="dataSourceProducto" matSort>
+                <ng-container matColumnDef='fecha'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='inventarios'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Inventarios</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.inventarios}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='razon'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Razon</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.razon}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='entrada'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Entradas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.entrada}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='salida'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Salidas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.salida}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsProducto; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsProducto;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

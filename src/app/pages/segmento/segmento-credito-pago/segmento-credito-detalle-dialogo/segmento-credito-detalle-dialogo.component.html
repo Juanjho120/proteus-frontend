@@ -1,0 +1,10 @@
+<div class="form-container">
+    <form [formGroup]="formSegmentoCreditoDetalle" #frmSegmentoCreditoDetalle="ngForm" (ngSubmit)="crearSegmentoCreditoDetalle()">
+        <mat-form-field class="mat-form-field-numeroFactura">
+                <input matInput placeholder="Número de Factura" required formControlName="numeroFactura">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmSegmentoCreditoDetalle.invalid">Facturar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

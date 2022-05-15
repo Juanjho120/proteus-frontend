@@ -1,0 +1,72 @@
+<div class="container mat-elevation-z8">
+    <h1>Autorizaciones</h1>
+    <section class="section-form-autorizacion">
+        <form [formGroup]="formAutorizacion" #frmAutorizacion="ngForm" (ngSubmit)="abrirPasswordDialogo()">
+            <mat-form-field appearance="outline" class="mat-form-field-tipo-autorizacion">
+                <mat-label>Tipo de Autorizacion</mat-label>
+                <mat-select [(value)]="idTipoAutorizacion" formControlName="tipoAutorizacion" required (selectionChange)="tipoAutorizacionChange()">
+                    <mat-option value="1">Habilitar servicio para edición</mat-option>
+                    <mat-option value="2">Anular factura de servicio</mat-option>
+                    <mat-option value="3">Cambiar número de factura de servicio</mat-option>
+                    <mat-option value="4">Cambiar segmento a servicio finalizado y/o facturado</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="mat-form-field-usuario">
+                <mat-label>Autorizado para</mat-label>
+                <mat-select [(value)]="idAutorizado" formControlName="autorizado" required>
+                    <mat-option *ngFor="let u of (usuarios$ | async)" [value]="u.idUsuario">
+                        {{u.nombre}} {{u.apellido}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Razon</mat-label>
+                <textarea matInput required formControlName="razon"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-correlativo" appearance="outline">
+                <mat-label>Servicio Correlativo</mat-label>
+                <input matInput required formControlName="correlativo" type="number">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-numero" appearance="outline">
+                <mat-label>Número de Factura</mat-label>
+                <input matInput required formControlName="numero">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="mat-form-field-segmento" appearance="outline">
+                <mat-label>Nuevo Segmento</mat-label>
+                <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                    <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                        {{s.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmAutorizacion.invalid">Autorizar</button>
+            <button mat-flat-button color="primary" type="button" (click)="nuevaAutorizacion()" style="margin-left: 10px;">Nueva Autorización</button>
+        </form>
+        <br>
+        <br>
+        <form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="crearReporteAutorizaciones()">
+            <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+                    value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+                    value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmBusqueda.invalid">Generar Reporte</button>
+        </form>
+    </section>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

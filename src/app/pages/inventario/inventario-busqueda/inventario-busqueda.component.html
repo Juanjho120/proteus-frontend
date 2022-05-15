@@ -1,0 +1,86 @@
+<mat-card dynamicHeight>
+    <mat-card-header>
+        <mat-card-title>Búsqueda de inventarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        
+        <section class="section-checkbox">
+            <mat-checkbox [(ngModel)]="porFactura" (change)="setFacturaSelect($event.checked)">Factura</mat-checkbox>
+            <mat-checkbox [(ngModel)]="porRepuesto" (change)="setRepuestoInput($event.checked)">Repuesto</mat-checkbox>
+            <mat-checkbox [(ngModel)]="porFecha" (change)="setFechaInput($event.checked)">Fecha</mat-checkbox>
+            <mat-checkbox [(ngModel)]="porServicio" (change)="setServicioSelect($event.checked)">Servicio</mat-checkbox>
+        </section>
+
+        <section class="section-form">
+            <form [formGroup]="form" #frmInventarioBusqueda="ngForm" (ngSubmit)="buscar()">
+                <mat-form-field class="mat-form-field-factura" appearance="outline">
+                    <mat-label>Factura</mat-label>
+                    <input type="text" required matInput [formControl]="myControlFactura" formControlName="factura">
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-repuesto" appearance="outline">
+                    <mat-label>Repuesto</mat-label>
+                    <input type="text" required matInput [matAutocomplete]="autoRepuesto" 
+                        [formControl]="myControlRepuesto" formControlName="repuesto">
+                </mat-form-field>
+                <mat-autocomplete #autoRepuesto="matAutocomplete" [displayWith]="mostrarRepuesto" (optionSelected)="seleccionarRepuesto($event)">
+                    <mat-option *ngFor="let r of repuestosFiltrados$ | async" [value]="r">
+                        {{ r.codigo }} - {{ r.descripcion }}
+                    </mat-option>
+                </mat-autocomplete>
+
+                <mat-form-field class="mat-form-field-servicio" appearance="outline">
+                    <mat-label>Servicio</mat-label>
+                    <input type="number" min="0" required matInput [formControl]="myControlServicio" formControlName="servicio">
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                    <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+                        value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicio></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                    <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+                        value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFin></mat-datepicker>
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscar()">Buscar</button>
+            </form>
+            <mat-divider></mat-divider>
+        </section>
+        <section class="section-panel">
+            <mat-expansion-panel *ngFor="let i of inventarios">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        INVENTARIO {{i.idInventario}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p style="margin: 0px;"><b>Tipo de inventario: </b> {{i.concepto.nombre}}</p>
+                <p style="margin: 0px;"><b>Ingresado por: </b> {{i.usuario.nombre}} {{i.usuario.apellido}}</p>
+                <p style="margin: 0px;"><b>Fecha y hora de ingreso: </b> {{i.fechaHora}}</p>
+                <p style="margin: 0px;"><b>Razón del inventario: </b> {{i.razon}}</p>
+                <br>
+                <mat-grid-list cols="10" rowHeight = "30px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"><b>Cant</b></mat-grid-tile>
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-header"><b>Repuesto</b></mat-grid-tile>
+                </mat-grid-list>
+                <mat-grid-list cols="10" rowHeight = "50px" *ngFor="let id of i.inventarioDetalle">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">{{id.cantidad}}</mat-grid-tile>
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-content">{{id.repuesto.descripcion}}</mat-grid-tile>
+                </mat-grid-list>
+                <button mat-flat-button color="primary" type="button" (click)="enviarInventarioEdicion(i)">Editar</button>
+                <button mat-button color="warn" type="button" (click)="abrirInventarioDialogoEliminar(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-expansion-panel>
+        </section>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

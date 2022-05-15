@@ -1,0 +1,5 @@
+<div>
+    <p>¿Eliminar el pago del {{segmentoPago.fechaHoraPago}} por un monto de Q. {{segmentoPago.monto.toFixed(2)}} de las facturas {{segmentoPago.facturas}}?</p>
+</div>
+<button mat-raised-button color="primary" (click)="eliminar()">Eliminar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>

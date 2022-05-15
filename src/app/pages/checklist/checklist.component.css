@@ -1,0 +1,23 @@
+.container {
+    margin: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.checklist-ingreso-edicion-container {
+    margin: 20px;
+}
+
+.checklist-ingreso-edicion-card-container {
+    width: 100%;
+}
+
+.checklist-busqueda-container {
+    margin: 20px;
+}
+
+.checklist-busqueda-card-container {
+    margin: 5px;
+    width: 99%;
+}

@@ -1,0 +1,58 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-table {
+    width: 930px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+.mat-column-fechaHora {
+    flex: 0 0 200px;
+}
+
+.mat-column-total {
+    flex: 0 0 100px;
+}
+
+.mat-column-usuario {
+    flex: 0 0 150px;
+}
+
+.mat-column-select {
+    flex: 0 0 50px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.mat-form-field-segmento {
+    margin-right: 25px;
+    width: 300px;
+}
+
+.mat-form-field-fecha-inicio {
+    margin-right: 25px;
+    width: 130px;
+}
+
+.mat-form-field-fecha-fin {
+    margin-right: 25px;
+    width: 130px;
+}
+
+.mat-form-field-usuario {
+    margin-right: 25px;
+    width: 200px;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}

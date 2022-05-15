@@ -1,0 +1,71 @@
+<mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+    <mat-radio-button value="1">Servicio</mat-radio-button>
+    <mat-radio-button value="2">Placa</mat-radio-button>
+</mat-radio-group>
+<form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscar()">
+    <!-- <mat-form-field appearance="fill" class="mat-form-field-servicio">
+        <mat-label>Servicio</mat-label>
+        <mat-select [(value)]="idServicio" formControlName="servicio" required>
+            <mat-option *ngFor="let s of (servicios$ | async)" [value]="s.idServicio">
+                {{s.correlativo}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field> -->
+    <mat-form-field class="mat-form-field-servicio" appearance="outline">
+        <mat-label>Correlativo</mat-label>
+        <input matInput required formControlName="servicio" type="number" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mat-form-field-placa">
+        <mat-label>Placa</mat-label>
+        <mat-select [(value)]="idPlaca" formControlName="placa" required>
+            <mat-option *ngFor="let p of (placas$ | async)" [value]="p.idPlaca">
+                {{p.numero}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit" [disabled]="evaluarBotonBuscar()">
+        <mat-icon>search</mat-icon>
+    </button>
+    <mat-table [dataSource]="dataSource" class="mat mat-elevation-z8">
+        <ng-container matColumnDef='noChecklist'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>No Checklist</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.idChecklist}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='checklistServicioTipo'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Servicio Kms</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.checklistServicioTipo.nombre}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='noServicio'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>No Servicio</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.servicio.correlativo}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='servicioTipo'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Servicio</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.servicio.servicioTipo.nombre}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='placa'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Placa</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.servicio.placa.numero}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='fechaIngreso'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de ingreso</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.fechaHoraIngreso}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef='fechaRevision'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de revisión</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.fechaRevision}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="cerrar(true, row)"></mat-row>
+    </mat-table>
+</form>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

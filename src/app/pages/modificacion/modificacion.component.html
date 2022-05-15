@@ -1,0 +1,111 @@
+<div class="container mat-elevation-z8">
+    <h1>Modificaciones</h1>
+    <section class="section-form-busqueda">
+        <form [formGroup]="formModificacionBusqueda" #frmModificacionBusqueda="ngForm" (ngSubmit)="buscarModificacion()">
+            <mat-form-field class="mat-form-field-fecha-inicio">
+                <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+                    value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha-fin">
+                <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+                    value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin" required>
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="mat-form-field-usuario">
+                <mat-label>Usuario</mat-label>
+                <mat-select [(value)]="idUsuario" formControlName="usuario">
+                    <mat-option *ngFor="let u of (usuarios$ | async)" [value]="u.idUsuario">
+                        {{u.nombre}} {{u.apellido}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmModificacionBusqueda.invalid">Buscar</button>
+        </form>
+    </section><br>
+    <h3><b>CREACIONES</b></h3>
+    <div class="mat-table-creacion-container">
+        <mat-table [dataSource]="dataSourceCreacion" matSort>
+            <ng-container matColumnDef='fechaHora'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</mat-header-cell>
+                <mat-cell *matCellDef="let row"><i>{{row.fechaHora}}</i></mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='detalle'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Detalle de modficación</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.detalle}}</mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='accion'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Ver</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-button color="primary" (click)="verCreacionDetalle(row)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumnsModificacion; sticky : true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsModificacion;"></mat-row>
+        </mat-table>
+    </div><br>
+    
+    <h3><b>ACTUALIZACIONES</b></h3>
+    <div class="mat-table-actualizacion-container">
+        <mat-table [dataSource]="dataSourceActualizacion" matSort>
+            <ng-container matColumnDef='fechaHora'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</mat-header-cell>
+                <mat-cell *matCellDef="let row"><i>{{row.fechaHora}}</i></mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='detalle'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Detalle de modficación</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.detalle}}</mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='accion'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Ver</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-button color="primary" (click)="verActualizacionDetalle(row)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumnsModificacion; sticky : true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsModificacion;"></mat-row>
+        </mat-table>
+    </div><br>
+
+    <h3><b>ELIMINACIONES</b></h3>
+    <div class="mat-table-eliminacion-container">
+        <mat-table [dataSource]="dataSourceEliminacion" matSort>
+            <ng-container matColumnDef='fechaHora'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</mat-header-cell>
+                <mat-cell *matCellDef="let row"><i>{{row.fechaHora}}</i></mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='detalle'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Detalle de modficación</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.detalle}}</mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef='accion'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Ver</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-button color="primary" (click)="verEliminacionDetalle(row)">
+                        <mat-icon>view_list</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumnsModificacion; sticky : true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsModificacion;"></mat-row>
+        </mat-table>
+    </div>
+</div>

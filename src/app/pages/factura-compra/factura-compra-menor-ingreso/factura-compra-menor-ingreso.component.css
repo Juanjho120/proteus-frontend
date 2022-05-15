@@ -1,0 +1,109 @@
+.mat-form-field-proveedor {
+    width: 45%;
+}
+
+.mat-form-field-codigo {
+    width: 250px;
+    margin-right: 10px;
+}
+
+.mat-form-field-servicio {
+    width: 200px;
+}
+
+.mat-form-field-fecha {
+    margin-right: 10px;
+    width: 170px;
+}
+
+.mat-form-field-cantidad {
+    margin-right: 10px;
+    width: 75px;
+}
+
+.mat-form-field-costo {
+    text-align: right;
+    margin-right: 10px;
+    width: 150px;
+}
+
+.mat-form-field-descripcion {
+    margin-right: 10px;
+    width: 650px;
+}
+
+.mat-column-cantidad {
+    flex : 0 0 20%;
+}
+
+.mat-column-costoCompra {
+    flex : 0 0 10%;
+}
+
+.mat-column-accion {
+    flex : 0 0 10%;
+}
+
+.mat-column-descripcion {
+    flex : 0 0 60%;
+}
+
+.mat-form-field-sucursal {
+    margin-right: 10px;
+    width: 200px;
+}
+
+.mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+    max-height: 250px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-table {
+    height: 175px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    justify-content: flex-start;
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.mat-header-row {
+    min-height: 30px;
+}
+
+.mat-row, .mat-footer-row {
+    min-height: 35px;
+}
+
+.factura-header {
+    display: flex;
+}
+.total-factura-label {
+    font-size: 30px;
+}
+.total-factura-container {
+    width: 50%;
+    text-align: right;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

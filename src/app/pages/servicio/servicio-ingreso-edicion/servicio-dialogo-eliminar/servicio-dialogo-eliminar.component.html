@@ -1,0 +1,6 @@
+<div>
+    <p>¿Eliminar el servicio {{servicio.servicioTipo.nombre}} para la placa {{servicio.placa.numero}} del segmento {{servicio.segmento.nombre}}?</p>
+</div>
+<button mat-raised-button color="primary" (click)="eliminar()">Eliminar</button>
+<button mat-raised-button color="warn" (click)="cerrar(false)">Cancelar</button>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

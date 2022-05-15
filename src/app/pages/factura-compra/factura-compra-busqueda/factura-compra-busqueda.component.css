@@ -1,0 +1,52 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-radio-group {
+    margin: 10px;
+}
+
+.mat-form-field-proveedor {
+    margin-right: 10px;
+    width: 400px;
+}
+
+.mat-form-field-fecha-inicio {
+    margin-right: 10px;
+    width: 150px;
+}
+
+.mat-form-field-fecha-fin {
+    margin-right: 10px;
+    width: 150px;
+}
+
+.mat-form-field-repuesto {
+    margin-right: 10px;
+    width: 550px;
+}
+
+.mat-form-field-vencimiento {
+    margin-right: 10px;
+    width: 150px;
+}
+
+.mat-form-field-sucursal {
+    margin-right: 10px;
+    width: 200px;
+}
+
+.p-factura {
+    margin: 0px;
+    padding: 0px;
+}
+
+.mat-grid-tile-header {
+    background: lightblue;
+}
+
+.mat-grid-tile-content {
+    background: white;
+}

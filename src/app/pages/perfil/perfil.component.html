@@ -1,0 +1,69 @@
+<div class="container mat-elevation-z8">
+    <h1>Mi Perfil</h1>
+    <div class="card-perfil-container" fxLayout="row" fxLayoutAlign="space-around start">
+        <mat-card dynamicHeight class="mat-card-perfil-imagen">
+            <mat-card-content>
+                <div class="center-image">
+                    <img src="assets/account.png" width="300px">
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card dynamicHeight class="mat-card-perfil-datos">
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-around start">
+                    <div class="form-container">
+                        <h3><b>Mis datos</b></h3>
+                        <form [formGroup]="form" #frmUsuario="ngForm" (ngSubmit)="editar()">
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Username" required formControlName="username">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Nombre" required formControlName="nombre">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Apellido" required formControlName="apellido">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Telefono" required formControlName="telefono">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Email" required formControlName="email">
+                            </mat-form-field>
+        
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Rol" required formControlName="rol">
+                            </mat-form-field>
+                            <button mat-raised-button [disabled]="frmUsuario.invalid" color="primary" type="submit">Guardar cambios</button>
+                        </form>
+                    </div>
+                    <div class="password-container">
+                        <h3><b>Cambio de contraseña</b></h3>
+                        <form [formGroup]="formPasswordActual" #frmPasswordActual="ngForm" (ngSubmit)="verificarPassword()">
+                            <mat-form-field style="margin-right: 10px;">
+                                <input matInput placeholder="Password Actual" required formControlName="passwordActual" type="password">
+                            </mat-form-field>
+                            <button mat-raised-button [disabled]="evaluarBotonVerificar()" color="primary" type="submit">Verificar</button>
+                        </form><br>
+                        <div class="cambio-password-container">
+                            <form [formGroup]="formPasswordNuevo" #frmPasswordNuevo="ngForm" (ngSubmit)="cambiarPassword()">
+                                <mat-form-field class="mat-form-field-datos">
+                                    <input matInput placeholder="Password Nuevo" required formControlName="passwordNuevo" type="password">
+                                </mat-form-field>
+    
+                                <mat-form-field class="mat-form-field-datos">
+                                    <input matInput placeholder="Repetir Password" required formControlName="passwordNuevoR" type="password">
+                                </mat-form-field>
+                                <button mat-raised-button [disabled]="evaluarBotonCambiarPassword()" color="primary" type="submit" style="margin-right: 5px;">Cambiar Contraseña</button>
+                                <button mat-raised-button [disabled]="formPasswordNuevo.disabled" color="warn" type="button" (click)="cancelar()">Cancelar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

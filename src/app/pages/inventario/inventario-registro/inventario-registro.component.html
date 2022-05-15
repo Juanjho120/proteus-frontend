@@ -1,0 +1,99 @@
+<mat-card dynamicHeight>
+    <mat-card-header>
+        <mat-card-title>Registro de inventarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+            <mat-label>Sucursal</mat-label>
+            <mat-select [(ngModel)]="idSucursal">
+                <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                    {{s.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-radio-group [(ngModel)]="idConcepto" [disabled]="conceptoControl" (change)="evaluarEntradaSalidaInventario($event)">
+            <mat-radio-button [value]="1">Entrada</mat-radio-button>
+            <mat-radio-button [value]="2">Salida</mat-radio-button>
+        </mat-radio-group>
+
+        <button class="button-guardar-inventario" mat-raised-button color="primary" type="button" [disabled]="evaluarBotonGuardar()" (click)="guardarInventario()">Guardar</button>
+        <button class="button-limpiar-inventario" mat-raised-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="limpiarControlGeneral()">Limpiar</button>
+        
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Código Factura de Compra</mat-label>
+            <input type="text" matInput [matAutocomplete]="facturaCompra" [formControl]="myControlFactura">
+        </mat-form-field>
+
+        <mat-autocomplete #facturaCompra="matAutocomplete" [displayWith]="mostrarFactura" (optionSelected)="seleccionarFactura($event)">
+            <mat-option *ngFor="let fc of facturasFiltradas$ | async" [value]="fc">
+                {{ fc.codigo }} - {{ fc.proveedor }}
+            </mat-option>
+        </mat-autocomplete>
+
+        <form [formGroup]="formInventario">
+            <div class="row">
+                <div class="sm-col-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Razon</mat-label>
+                        <textarea matInput required formControlName="razon"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        
+        <form [formGroup]="form" #frmRepuesto="ngForm" (ngSubmit)="agregarDetalle()">
+            <mat-form-field class="mat-form-field-cantidad" appearance="outline">
+                <mat-label>Cant</mat-label>
+                <input matInput required formControlName="cantidad" type="number">
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-repuesto" appearance="outline">
+                <mat-label>Repuesto</mat-label>
+                <input type="text" matInput [matAutocomplete]="autoRepuesto" 
+                    [formControl]="myControlRepuesto" required formControlName="repuesto">
+            </mat-form-field>
+
+            <mat-autocomplete #autoRepuesto="matAutocomplete" [displayWith]="mostrarRepuesto" (optionSelected)="seleccionarRepuesto($event)">
+                <mat-option *ngFor="let r of repuestosFiltrados$ | async" [value]="r">
+                    {{ r.codigo }} - {{ r.descripcion }}
+                </mat-option>
+            </mat-autocomplete>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmRepuesto.invalid">Añadir</button>
+        </form>
+        <mat-divider></mat-divider><br>
+        <div class="mat-table-inventario-detalle">
+            <mat-table [dataSource]="dataSourceInventarioDetalle">
+                <ng-container matColumnDef='cantidad'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Cant</mat-header-cell>
+                    <mat-cell *matCellDef="let row; let index">{{row.cantidad}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='codigo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.repuesto.codigo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='descripcion'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.repuesto.descripcion}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='accion'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="warn" (click)="removerDetalle(index)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsInventarioDetalle; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsInventarioDetalle;"></mat-row>
+            </mat-table>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

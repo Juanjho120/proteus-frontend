@@ -1,0 +1,42 @@
+<div>
+    <form [formGroup]="form" #frmUsuario="ngForm" (ngSubmit)="editar()">
+        <mat-form-field>
+            <input matInput placeholder="Username" required formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Nombre" required formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Apellido" required formControlName="apellido">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Email" required formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Telefono" required formControlName="telefono">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <mat-select [(value)]="estado" formControlName="estado" required>
+                <mat-option [value]="1">ACTIVO</mat-option>
+                <mat-option [value]="2">INACTIVO</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Rol</mat-label>
+            <mat-select [(value)]="idRol" formControlName="rol" required>
+                <mat-option *ngFor="let r of (roles$ | async)" [value]="r.idRol">
+                    {{r.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<button mat-raised-button color="primary" (click)="editar()">Editar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>

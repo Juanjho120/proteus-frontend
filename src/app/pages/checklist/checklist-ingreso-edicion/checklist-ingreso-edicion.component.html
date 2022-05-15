@@ -1,0 +1,137 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <div class="button-container">
+            <button mat-flat-button color="primary" type="button" [disabled]="evaluarBotonGuardar()" (click)="operar()">Guardar</button>
+            <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="abrirChecklistDialogoBuscar()">Buscar</button>
+            <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="nuevoChecklist()">Nuevo</button>
+        </div>
+        <mat-divider></mat-divider>
+        <p class="checklist-label">CHECKLIST DE MANTENIMIENTO DE UNIDADES</p>
+        <form [formGroup]="formChecklist" #frmCotizacion="ngForm" (ngSubmit)="operar()" style="margin-top: 20px;">
+            <div>
+                <!-- <mat-form-field appearance="fill" class="mat-form-field-servicio">
+                    <mat-label>No Servicio</mat-label>
+                    <mat-select [(value)]="idServicio" formControlName="servicio" (selectionChange)="cargarCampos()" required>
+                        <mat-option *ngFor="let s of (servicios$ | async)" [value]="s.idServicio">
+                            {{s.correlativo}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>-->
+                <mat-form-field class="mat-form-field-servicio" appearance="outline">
+                    <mat-label>Correlativo</mat-label>
+                    <input matInput required formControlName="servicio" (focusout)="cargarCampos()" type="number" min="0">
+                </mat-form-field>
+    
+                <mat-form-field class="mat-form-field-kilometrajeActual" appearance="outline">
+                    <mat-label>Km Actual</mat-label>
+                    <input matInput required formControlName="kilometrajeActual" type="number" min="0" disabled>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fechaRevision" appearance="outline">
+                    <mat-label>Fecha de Revisión</mat-label>
+                    <input matInput [matDatepicker]="picker" [max]="maxFecha" required
+                        value="fechaRevisionSeleccionada" (dateChange)="cambiarFecha($event)" formControlName="fechaRevision">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="mat-form-field-placa" appearance="outline">
+                    <mat-label>No Placa</mat-label>
+                    <input matInput required formControlName="placa">
+                </mat-form-field>
+    
+                <mat-form-field class="mat-form-field-kilometrajeProximo" appearance="outline">
+                    <mat-label>Km Siguiente</mat-label>
+                    <input matInput required formControlName="kilometrajeProximo" type="number" min="0">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-checklistServicioTipo">
+                    <mat-label>Tipo de servicio</mat-label>
+                    <mat-select [(value)]="idChecklistServicioTipo" formControlName="checklistServicioTipo" required (selectionChange)="cargarDetalle()">
+                        <mat-option *ngFor="let cst of (checklistServicioTipos$ | async)" [value]="cst.idChecklistServicioTipo">
+                            {{cst.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="identificacion-label-container">
+                <div>
+                    <p class="identificacion-label"><b>IDENTIFICACIÓN DE LA UNIDAD</b></p>
+                    <div class="evaluacion-container">
+                        <p class="bueno-label"><b>Bueno</b></p>
+                        <p class="malo-label"><b>Malo</b></p>
+                        <p class="noAplica-label"><b>No Aplica</b></p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="sistema-mecanico-label"><b>SISTEMA MECÁNICO</b></p>
+                <mat-grid-list cols="12" rowHeight = "25px">
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-header"><b>Item</b></mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1" class="mat-grid-tile-header"><b>Evaluación</b></mat-grid-tile>
+                </mat-grid-list>
+                <mat-grid-list cols="12" rowHeight = "40px" *ngFor="let cdm of checklistDetalleMecanico">
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-descripcion">{{cdm.checklistItem.nombre}}</mat-grid-tile>
+                    <mat-radio-group [(ngModel)]="cdm.checklistEvaluacion.idChecklistEvaluacion" [ngModelOptions]="{standalone: true}" color="primary">
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-bueno">
+                            <mat-radio-button [value]="1"></mat-radio-button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-malo">
+                            <mat-radio-button [value]="2"></mat-radio-button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-noAplica">
+                            <mat-radio-button [value]="3"></mat-radio-button>
+                        </mat-grid-tile>
+                    </mat-radio-group>
+                </mat-grid-list>
+
+                <p class="sistema-electrico-label"><b>SISTEMA ELÉCTRICO</b></p>
+                <mat-grid-list cols="12" rowHeight = "25px">
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-header"><b>Item</b></mat-grid-tile>
+                    <mat-grid-tile [colspan]="3" [rowspan]="1" class="mat-grid-tile-header"><b>Evaluación</b></mat-grid-tile>
+                </mat-grid-list>
+                <mat-grid-list cols="12" rowHeight = "40px" *ngFor="let cde of checklistDetalleElectrico">
+                    <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-descripcion">{{cde.checklistItem.nombre}}</mat-grid-tile>
+                    <mat-radio-group [(ngModel)]="cde.checklistEvaluacion.idChecklistEvaluacion" [ngModelOptions]="{standalone: true}" color="primary">
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-bueno">
+                            <mat-radio-button [value]="1"></mat-radio-button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-malo">
+                            <mat-radio-button [value]="2"></mat-radio-button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-noAplica">
+                            <mat-radio-button [value]="3"></mat-radio-button>
+                        </mat-grid-tile>
+                    </mat-radio-group>
+                </mat-grid-list>
+            </div>
+            <div style="margin-top: 25px;">
+                <mat-form-field class="mat-form-field-observaciones" appearance="outline">
+                    <mat-label>Observaciones</mat-label>
+                    <textarea matInput formControlName="observaciones" class="textarea-observaciones"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="personal-container">
+                <mat-form-field appearance="fill" class="mat-form-field-supervisor">
+                    <mat-label>Supervisor</mat-label>
+                    <mat-select [(value)]="idSupervisor" formControlName="supervisor" required>
+                        <mat-option *ngFor="let s of (supervisores$ | async)" [value]="s.idPersonal">
+                            {{s.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-mecanico">
+                    <mat-label>Mecánico</mat-label>
+                    <mat-select [(value)]="idMecanico" formControlName="mecanico" required>
+                        <mat-option *ngFor="let m of (mecanicos$ | async)" [value]="m.idPersonal">
+                            {{m.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

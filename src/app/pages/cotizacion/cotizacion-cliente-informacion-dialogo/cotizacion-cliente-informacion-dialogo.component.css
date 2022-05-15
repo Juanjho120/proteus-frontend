@@ -1,0 +1,19 @@
+.cliente-automotor-container {
+    display: flex;
+    justify-content: center;
+    width: 600px;
+}
+
+.cliente-container {
+    width: 60%;
+    padding: 15px;
+}
+
+.automotor-container {
+    width: 40%;
+    padding: 15px;
+}
+
+.mat-form-field {
+    width: 100%;
+}

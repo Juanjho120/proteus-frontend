@@ -1,0 +1,19 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Checklists</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Ingreso y edición">
+            <div class="checklist-ingreso-edicion-container" fxLayout="row" dynamicHeight>
+                <div class="chobecklist-ingreso-edicion-card-container" dynamicHeight>
+                    <app-checklist-ingreso-edicion></app-checklist-ingreso-edicion>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Búsqueda">
+            <div class="checklist-busqueda-container" dynamicHeight>
+                <div class="checklist-busqueda-card-container" dynamicHeight>
+                    <app-checklist-busqueda></app-checklist-busqueda>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

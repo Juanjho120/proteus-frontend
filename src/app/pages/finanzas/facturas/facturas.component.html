@@ -1,0 +1,187 @@
+<mat-card dynamicHeight style="padding: 30px;">
+    <mat-card-content>
+        <p class="facturas-clientes-label"><b>FACTURAS DE SEGMENTOS</b></p>
+        <div class="controles-busqueda-factura-cliente-container">
+            <mat-radio-group [(ngModel)]="idBusquedaFacturaCliente" (change)="setInputsFacturaCliente()">
+                <mat-radio-button value="1">Segmento</mat-radio-button>
+                <mat-radio-button value="2">Fecha Emisión</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <form [formGroup]="formBusquedaFacturaCliente" #frmBusquedaFacturaCliente="ngForm" (ngSubmit)="buscarFacturasCliente()">
+            <mat-form-field appearance="fill" class="mat-form-field-segmento">
+                <mat-label>Segmento</mat-label>
+                <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                    <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                        {{s.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha-inicio">
+                <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+                    value="fechaInicioClienteSeleccionada" (dateChange)="cambiarFechaInicioCliente($event)" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-fecha-fin">
+                <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+                    value="fechaFinClienteSeleccionada" (dateChange)="cambiarFechaFinCliente($event)" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmBusquedaFacturaCliente.invalid">Buscar</button>
+        </form>
+        <div class="table-factura-segmento-container">
+            <mat-table [dataSource]="dataSourceFacturaCliente" class="mat-table-factura-segmento">
+                <ng-container matColumnDef='facturaNumero'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No Factura</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.facturaNumero}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='fecha'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='segmento'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Segmento</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.segmento}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='placa'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Placa</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.placa}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='total'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row">Q. {{row.total.toFixed(2)}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='pagada'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Pagada</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [ngClass]="{
+                            'visible' : row.pagada,
+                            'hidden' : !row.pagada
+                        }">done</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='fechaPago'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Pago</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fechaPago}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='tipoPago'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Pago</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.tipoPago}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='imprimir'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="primary" type="button" [disabled]="verBotonReporte(row)" (click)="crearReporteFacturaCliente(row)">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsCliente; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsCliente;"></mat-row>
+            </mat-table>
+        </div><br>
+        <mat-divider></mat-divider><br>
+        <p class="facturas-clientes-label"><b>FACTURAS DE PROVEEDORES</b></p>
+        <div class="controles-busqueda-factura-proveedor-container">
+            <mat-radio-group [(ngModel)]="idBusquedaFacturaProveedor" (change)="setInputsFacturaProveedor()">
+                <mat-radio-button value="1">Proveedor</mat-radio-button>
+                <mat-radio-button value="2">Fecha Emisión</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <form [formGroup]="formBusquedaFacturaProveedor" #frmBusquedaFacturaProveedor="ngForm" (ngSubmit)="buscarFacturasProveedor()">
+            <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                <mat-label>Proveedor</mat-label>
+                <mat-select [(value)]="idProveedor" formControlName="proveedor" required>
+                    <mat-option *ngFor="let p of (proveedores$ | async)" [value]="p.idProveedor">
+                        {{p.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha-inicio">
+                <input matInput [matDatepicker]="pickerInicioP" placeholder="Inicio" [max]="maxFecha"
+                    value="fechaInicioProveedorSeleccionada" (dateChange)="cambiarFechaInicioProveedor($event)" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicioP"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicioP></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-fecha-fin">
+                <input matInput [matDatepicker]="pickerFinP" placeholder="Fin" [max]="maxFecha"
+                    value="fechaFinProveedorSeleccionada" (dateChange)="cambiarFechaFinProveedor($event)" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFinP"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFinP></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmBusquedaFacturaProveedor.invalid">Buscar</button>
+        </form>
+        <div class="table-factura-proveedor-container">
+            <mat-table [dataSource]="dataSourceFacturaProveedor" class="mat-table-factura-proveedor">
+                <ng-container matColumnDef='facturaNumero'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No Factura</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.facturaNumero}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='fecha'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='proveedor'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.proveedor}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='total'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row">Q. {{row.total.toFixed(2)}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='vencida'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Vencida</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [ngClass]="{
+                            'visible' : row.vencida,
+                            'hidden' : !row.vencida
+                        }">report_problem</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='pagada'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Pagada</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [ngClass]="{
+                            'visible' : row.pagada,
+                            'hidden' : !row.pagada
+                        }">done</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='fechaPago'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Pago</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fechaPago}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='tipoPago'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Pago</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.tipoPago}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsProveedor; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsProveedor;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>

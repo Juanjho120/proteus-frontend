@@ -1,0 +1,137 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Cotizaciones</h1>
+    <div class="cotizacion-container" dynamicHeight>
+        <mat-card dynamicHeight>
+            <mat-card-content>
+                <form [formGroup]="formCotizacion" #frmCotizacion="ngForm" (ngSubmit)="operar()">
+                    <mat-grid-list cols="12" rowHeight = "70px">
+                        <mat-grid-tile [colspan]="4" [rowspan]="1" class="mat-grid-tile-content">
+                            <mat-form-field appearance="fill" class="mat-form-field-segmento">
+                                <mat-label>Segmento</mat-label>
+                                <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                                    <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                                        {{s.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonCrear()" class="button-grid">Guardar</button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="abrirCotizacionDialogoBuscar()" class="button-grid">Buscar</button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="limpiarControlCotizacion()" class="button-grid">Nuevo</button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-button color="accent" type="button" [disabled]="evaluarBotonEliminar()" (click)="abrirCotizacionDialogoEliminar()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-button color="primary" type="button" [disabled]="verBotonReporte()" (click)="crearReporteCotizacion()">
+                                <mat-icon>print</mat-icon>
+                            </button>
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">
+                            <p class="total-cotizacion-label">Q. {{totalCotizacion.toFixed(2)}}</p>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <p class="usuario-label"><b>Creado por: </b> {{usuario.nombre}} {{usuario.apellido}} / <b>Fecha de creación: </b>{{cotizacion.fechaHora}}</p>
+                    <br>
+                    <mat-divider></mat-divider>
+                </form>
+                <div class="cotizacion-detalle-container">
+                    <div class="cotizacion-trabajo-container">
+                        <div class="cotizacion-trabajo-header-container">
+                            <form [formGroup]="formCotizacionTrabajo" #frmCotizacionTrabajo="ngForm" (ngSubmit)="agregarCotizacionTrabajo()">
+                                <mat-form-field class="mat-form-field-descripcion-trabajo">
+                                    <textarea matInput placeholder="Descripcion del trabajo" required formControlName="descripcion"></textarea>
+                                </mat-form-field>
+                                Q.
+                                <mat-form-field class="mat-form-field-costo-trabajo">
+                                    <input matInput placeholder="Costo" required formControlName="costo" type="number" min="0" autocomplete="off">
+                                </mat-form-field>
+
+                                <button mat-flat-button color="primary" type="submit" [disabled]="frmCotizacionTrabajo.invalid">Añadir</button>
+                            </form>
+                        </div>
+                        <div class="cotizacion-trabajo-content-container">
+                            <mat-grid-list cols="10" rowHeight = "30px">
+                                <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-header"><b>Descripción del trabajo</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Costo</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"></mat-grid-tile>
+                            </mat-grid-list>
+                            <mat-grid-list cols="10" rowHeight = "40px" *ngFor="let ct of cotizacionTrabajos; let i=index">
+                                <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-descripcion-trabajo">{{ct.descripcionTrabajo}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{ct.costo.toFixed(2)}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                                    <button mat-button color="accent" type="button" (click)="removerCotizacionTrabajo(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                            <mat-grid-list cols="10" rowHeight = "30px">
+                                <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-content"><b>Total del trabajo</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Q. {{totalTrabajo.toFixed(2)}}</b></mat-grid-tile>
+                            </mat-grid-list>
+                        </div>
+                    </div>
+                    <div class="cotizacion-repuesto-container">
+                        <div class="cotizacion-repuesto-header-container">
+                            <form [formGroup]="formCotizacionRepuesto" #frmCotizacionRepuesto="ngForm" (ngSubmit)="agregarCotizacionRepuesto()">
+                                <mat-form-field class="mat-form-field-cantidad-repuesto">
+                                    <input matInput placeholder="Cant" required formControlName="cantidad" type="number" min="0" autocomplete="off">
+                                </mat-form-field>
+
+                                <mat-form-field class="mat-form-field-repuesto">
+                                    <input type="text" placeholder="Seleccione el repuesto" matInput [matAutocomplete]="autoRepuesto" 
+                                        [formControl]="myControlRepuesto" required formControlName="repuesto" autocomplete="off">
+                                </mat-form-field>
+                    
+                                <mat-autocomplete #autoRepuesto="matAutocomplete" [displayWith]="mostrarRepuesto" (optionSelected)="seleccionarRepuesto($event)">
+                                    <mat-option *ngFor="let r of repuestosFiltrados$ | async" [value]="r">
+                                        {{ r.descripcion }}
+                                    </mat-option>
+                                </mat-autocomplete>
+
+                                Q.
+                                <mat-form-field class="mat-form-field-costo-repuesto">
+                                    <input matInput placeholder="Costo" required formControlName="costoUnitario" type="number" min="0" autocomplete="off">
+                                </mat-form-field>
+
+                                <button mat-flat-button color="primary" type="submit" [disabled]="frmCotizacionRepuesto.invalid">Añadir</button>
+                            </form>
+                        </div>
+                        <div class="cotizacion-repuesto-content-container">
+                            <mat-grid-list cols="12" rowHeight = "30px">
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"><b>Cant</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="6" [rowspan]="1" class="mat-grid-tile-header"><b>Repuesto</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Costo</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Subtotal</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"></mat-grid-tile>
+                            </mat-grid-list>
+                            <mat-grid-list cols="12" rowHeight = "50px" *ngFor="let cr of cotizacionRepuestos; let i=index">
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">{{cr.cantidad}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="6" [rowspan]="1" class="mat-grid-tile-content">{{cr.repuesto.descripcion}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{cr.costoUnitario.toFixed(2)}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{cr.costoTotal.toFixed(2)}}</mat-grid-tile>
+                                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                                    <button mat-button color="accent" type="button" (click)="removerCotizacionRepuesto(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                            <mat-grid-list cols="12" rowHeight = "30px">
+                                <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-content"><b>Total del repuesto</b></mat-grid-tile>
+                                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Q. {{totalRepuesto.toFixed(2)}}</b></mat-grid-tile>
+                            </mat-grid-list>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

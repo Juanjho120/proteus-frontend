@@ -1,0 +1,8 @@
+<div>
+    <mat-form-field>
+        <input matInput placeholder="Nombre" [(ngModel)]="facturaCompraMenorDetalle.costoVenta" type="number">
+    </mat-form-field>
+</div>
+<button mat-raised-button color="primary" (click)="editar()">Editar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

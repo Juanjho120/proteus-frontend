@@ -1,0 +1,171 @@
+.ingreso-label {
+    font-size: 16px;
+}
+
+.busqueda-label {
+    font-size: 16px;
+}
+
+.mat-form-field-placa {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-autoriza {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-recibe {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-concepto {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-descripcion {
+    width: 475px;
+}
+
+.mat-form-field-monto {
+    width: 150px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.mat-form-field-comprobanteTipo {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-numeroComprobante {
+    width: 220px;
+    margin-right: 10px;
+}
+
+.mat-flat-button {
+    width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.caja-chica-busqueda-container {
+    margin-top: 20px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-form-field-servicio {
+    width: 220px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-inicio {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.mat-form-field-fecha-fin {
+    width: 150px;
+    margin-right: 20px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-column-concepto {
+    flex: 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-autoriza {
+    flex: 0 0 185px;
+    justify-content: center;
+}
+
+.mat-column-recibe {
+    flex: 0 0 185px;
+    justify-content: center;
+}
+
+.mat-column-fechaIngreso {
+    flex: 0 0 105px;
+    justify-content: center;
+}
+
+.mat-column-placa {
+    flex: 0 0 110px;
+    justify-content: center;
+}
+
+.mat-column-descripcion {
+    justify-content: flex-start;
+    font-size: 12px;
+}
+
+.mat-column-comprobanteTipo {
+    flex: 0 0 150px;
+    justify-content: center;
+}
+
+.mat-column-monto {
+    flex: 0 0 90px;
+    justify-content: flex-end;
+}
+
+.mat-column-acciones {
+    flex: 0 0 95px;
+    justify-content: center;
+}
+
+.caja-chica-mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-button-accion {
+    width: 45px !important;
+    min-width: unset !important;
+}
+
+.saldo-label {
+    margin-left: 100px;
+    font-size: 40px;
+}
+
+.mat-form-field-facturaCompra {
+    margin-right: 10px;
+    width: 450px;
+}
+
+.mat-table {
+    max-height: 450px;
+    overflow: auto;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

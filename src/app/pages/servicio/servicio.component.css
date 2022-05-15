@@ -1,0 +1,31 @@
+.container {
+    margin: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.servicio-ingreso-edicion-container {
+    margin: 20px;
+}
+
+.servicio-ingreso-edicion-card-container {
+    width: 100%;
+}
+
+.servicio-busqueda-container {
+    margin: 20px;
+}
+
+.servicio-busqueda-card-container {
+    margin: 5px;
+    width: 99%;
+}
+
+.servicio-resumen-container {
+    margin: 20px;
+}
+
+.servicio-resumen-card-container {
+    width: 100%;
+}

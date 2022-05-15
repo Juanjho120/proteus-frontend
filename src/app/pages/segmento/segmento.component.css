@@ -1,0 +1,23 @@
+.container {
+    margin: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.segmento-ingreso-busqueda-container {
+    margin: 20px;
+}
+
+.segmento-ingreso-busqueda-card-container {
+    width: 100%;
+}
+
+.segmento-credito-pago-container {
+    margin: 20px;
+}
+
+.segmento-credito-pago-card-container {
+    margin: 15px;
+    width: 100%;
+}

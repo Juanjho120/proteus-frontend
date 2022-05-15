@@ -1,0 +1,45 @@
+<div>
+    <form [formGroup]="form" #frm="ngForm" (ngSubmit)="generarCotizacionCliente()">
+        <div class="cliente-automotor-container">
+            <div class="cliente-container">
+                <p><b>Datos del cliente</b></p>
+                <mat-form-field class="mat-form-field-segmentoNombre">
+                    <input matInput placeholder="Nombre del cliente" formControlName="segmentoNombre">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-segmentoDireccion">
+                    <textarea matInput placeholder="Dirección" formControlName="segmentoDireccion"></textarea>
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-segmentoNit">
+                    <input matInput placeholder="NIT" formControlName="segmentoNit">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-atencion">
+                    <textarea matInput placeholder="Atención" formControlName="atencion"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="automotor-container">
+                <p><b>Datos del automotor</b></p>
+                <mat-form-field class="mat-form-field-marca">
+                    <input matInput placeholder="Marca" formControlName="marca">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-tipo">
+                    <input matInput placeholder="Tipo" formControlName="tipo">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-modelo">
+                    <input matInput placeholder="Modelo" formControlName="modelo">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-placa">
+                    <input matInput placeholder="Placa" formControlName="placa">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-color">
+                    <input matInput placeholder="Color" formControlName="color">
+                </mat-form-field>
+                <mat-form-field class="mat-form-field-linea">
+                    <input matInput placeholder="Linea" formControlName="linea">
+                </mat-form-field>
+            </div>
+        </div>
+        <button mat-flat-button color="primary" type="submit" [disabled]="loaderService.isLoading.value">Crear Cotización</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button" [disabled]="loaderService.isLoading.value">Cancelar</button>
+    </form>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

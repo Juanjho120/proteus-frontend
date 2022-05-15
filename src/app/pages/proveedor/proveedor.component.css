@@ -1,0 +1,93 @@
+.container {
+    margin : 20px;
+    padding: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.container-header {
+    margin-top: 20px;
+    display: flex;
+}
+
+.card-proveedores-container {
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.card-proveedor-container-container {
+    height: 400px;
+    overflow: auto;
+}
+
+.mat-card {
+    width: 30%;
+    margin: 10px;
+    height: 450px;
+}
+
+.asesores-container {
+    max-height: 225px;
+    overflow: auto;
+}
+
+.h3-nombre-proveedor {
+    margin: 0px;
+}
+
+.h5-direccion-proveedor {
+    margin: 0px;
+}
+
+.h5-telefono-proveedor {
+    margin: 0px;
+}
+
+.h4-asesores {
+    margin-bottom: 0px;
+}
+
+.mat-button-agregar-asesor {
+    margin-left: 220px;
+}
+
+.card-proveedores-menores-container {
+    margin-top: 20px;
+}
+
+.table-proveedor-menor-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 468px;
+}
+
+.mat-table {
+    height: 350px;
+    overflow: auto;
+}
+
+.mat-column-nombre {
+    flex : 0 0 300px;
+}
+
+.mat-column-acciones {
+    flex : 0 0 120px;
+    justify-content: center;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.register-proveedor-menor-container {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.mat-form-field-nombre-proveedor-menor {
+    width: 350px;
+    margin-right: 40px;
+}

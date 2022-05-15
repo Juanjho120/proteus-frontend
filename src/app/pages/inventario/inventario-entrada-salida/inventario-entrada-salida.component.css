@@ -1,0 +1,92 @@
+.mat-card {
+    width: 1150px;
+    padding: 30px;
+}
+
+.mat-form-field-fecha-inicio {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.mat-form-field-repuesto {
+    width: 450px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-fin {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.section-form-fecha {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.section-form-producto-fecha {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+    margin-top: 10px;
+}
+
+.card-table-container {
+    width: 100%;
+    border-style: ridge;
+    border-width: 1px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.mat-column-codigo {
+    flex : 0 0 15%;
+}
+
+.mat-column-entrada {
+    flex : 0 0 15%;
+}
+
+.mat-column-salida {
+    flex : 0 0 15%;
+}
+
+.mat-column-existencia {
+    flex : 0 0 15%;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.por-fechas-label {
+    font-size: 14px;
+    display: inline;
+    margin-bottom: 15px;
+}
+
+.por-producto-label {
+    font-size: 14px;
+    display: inline;
+}
+
+.mat-column-fecha {
+    flex : 0 0 10%;
+}
+
+.mat-column-entrada {
+    flex : 0 0 7%;
+}
+
+.mat-column-salida {
+    flex : 0 0 7%;
+}
+
+.mat-column-inventarios {
+    flex : 0 0 30%;
+}

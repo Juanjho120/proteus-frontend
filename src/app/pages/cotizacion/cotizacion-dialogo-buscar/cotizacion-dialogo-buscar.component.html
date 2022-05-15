@@ -1,0 +1,69 @@
+<mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+    <mat-radio-button value="1">Segmento</mat-radio-button>
+    <mat-radio-button value="2">Fecha</mat-radio-button>
+    <mat-radio-button value="3">Usuario</mat-radio-button>
+</mat-radio-group>
+<form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscar()">
+    <mat-form-field appearance="fill" class="mat-form-field-segmento">
+        <mat-label>Segmento</mat-label>
+        <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+            <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                {{s.nombre}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+        <mat-label>Inicio</mat-label>
+        <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+            value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+        <mat-label>Fin</mat-label>
+        <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+            value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFin></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="mat-form-field-usuario">
+        <mat-label>Usuario</mat-label>
+        <mat-select [(value)]="idUsuario" formControlName="usuario" required>
+            <mat-option *ngFor="let u of (usuarios$ | async)" [value]="u.idUsuario">
+                {{u.nombre}} {{u.apellido}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-button color="primary" type="submit" [disabled]="evaluarBotonBuscar()">
+        <mat-icon>search</mat-icon>
+    </button>
+</form>
+<mat-table [dataSource]="dataSource" class="mat mat-elevation-z8">
+    <ng-container matColumnDef='segmento'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Segmento</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.segmento.nombre}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='fechaHora'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y Hora</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.fechaHora}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='total'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+        <mat-cell *matCellDef="let row">Q. {{row.total.toFixed(2)}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='usuario'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Hecho por</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.usuario.nombre}} {{row.usuario.apellido}}</mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="cerrar(row)"></mat-row>
+</mat-table>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

@@ -1,0 +1,29 @@
+/*#marcas-autos {
+    width: 400px;
+}*/
+
+.marcas-autos-card {
+    width: 350px;
+}
+
+.marcas-repuestos-card {
+    width: 350px;
+}
+
+.mat-card {
+    height: 450px;
+}
+.servicios-tipos-card {
+    width: 350px;
+}
+
+.container {
+    margin: 20px;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.personal-puesto-card {
+    margin-top: 20px;
+    width: 400px;
+}

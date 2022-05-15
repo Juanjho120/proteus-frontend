@@ -1,0 +1,51 @@
+<div class="dialogo-container">
+    <div class="objeto-container" id="div-segmento">
+        <h3 style="color: green;"><b>SEGMENTO NUEVO</b></h3>
+        <div style="text-align: left;">
+            <p><b>Nombre: </b>{{segmento.nombre}}</p>
+            <p><b>Dirección: </b>{{segmento.direccionFiscal}}</p>
+            <p><b>NIT: </b>{{segmento.nit}}</p>
+        </div>
+    </div>
+    <div class="objeto-container" id="div-segmento">
+        <h3 style="color: green;"><b>PROVEEDOR NUEVO</b></h3>
+        <div style="text-align: left;">
+            <p><b>Nombre: </b>{{proveedor.nombre}}</p>
+            <p><b>Dirección: </b>{{proveedor.direccionFiscal}}</p>
+            <p><b>Teléfono: </b>{{proveedor.telefono}}</p>
+            <p><b>NIT: </b>{{proveedor.nit}}</p>
+        </div>
+    </div>
+    <div class="objeto-container" id="div-proveedor-menor">
+        <h3 style="color: green;"><b>PROVEEDOR MENOR NUEVO</b></h3>
+        <div style="text-align: left;">
+            <p><b>Nombre: </b>{{proveedorMenor.nombre}}</p>
+        </div>
+    </div>
+    <div class="objeto-container" id="div-proveedor-asesor">
+        <h3 style="color: green;"><b>ASESOR DE PROVEEDOR NUEVO</b></h3>
+        <div style="text-align: left;">
+            <p><b>Nombre: </b>{{proveedorAsesor.nombre}}</p>
+        </div>
+    </div>
+    <div class="objeto-container" id="div-repuesto">
+        <h3 style="color: green;"><b>REPUESTO NUEVO</b></h3>
+        <div style="text-align: left;">
+            <p><b>Código: </b>{{repuesto.codigo}}</p>
+            <p><b>Descripción: </b>{{repuesto.descripcion}}</p>
+            <p><b>Existencia: </b>{{repuesto.existencia}}</p>
+        </div>
+    </div>
+    <div class="objeto-container" id="div-placa">
+        <h3 style="color: green;"><b>PLACA NUEVA</b></h3>
+        <div style="text-align: left;">
+            <p><b>Número: </b>{{placa.numero}}</p>
+            <p><b>Marca de auto: </b>{{placa.marcaAuto.nombre}}</p>
+            <p><b>Ultimo servicio: </b>{{placa.fechaUltimoServicio}}</p>
+            <p><b>Ultimo kilometraje: </b>{{placa.ultimoKilometraje}}</p>
+        </div>
+    </div>
+    <div id="div-eliminado" class="eliminado-label-container">
+        <h3 style="color: red;"><b>REGISTRO ELIMINADO</b></h3>
+    </div>
+</div>

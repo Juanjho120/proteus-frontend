@@ -1,0 +1,55 @@
+.mat-table {
+    width: 1200px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+.mat-column-fecha {
+    flex: 0 0 120px;
+}
+
+.mat-column-servicioTipo {
+    flex: 0 0 150px;
+}
+
+.mat-column-placa {
+    flex: 0 0 100px;
+}
+
+.mat-column-costo {
+    flex: 0 0 130px;
+    justify-content: left!important;
+}
+
+.mat-column-sucursal {
+    flex: 0 0 200px;
+}
+
+.mat-column-correlativo {
+    flex: 0 0 80px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+}
+
+.mat-form-field-segmento {
+    width: 300px;
+}
+
+.mat-form-field-sucursal {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-header-cell {
+    font-size: 13px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}

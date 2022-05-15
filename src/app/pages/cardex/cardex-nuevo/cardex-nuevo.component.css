@@ -1,0 +1,48 @@
+.container {
+    margin: 20px;
+}
+
+.repuesto-nuevo-card-container {
+    width : 560px;
+}
+
+.mat-form-field-codigo {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.mat-form-field-codigoBarra {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.mat-form-field-existencia {
+    width: 105px;
+}
+
+.mat-form-field-precio {
+    width: 120px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+.mat-form-field-descripcion {
+    width: 100%;
+    margin-right: 40px;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

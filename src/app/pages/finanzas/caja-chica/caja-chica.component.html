@@ -1,0 +1,186 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <p class="ingreso-label"><b>Ingreso de caja chica</b></p>
+        <div class="caja-chica-ingreso-container">
+            <form [formGroup]="formCajaChica" #frmCajaChica="ngForm" (ngSubmit)="guardarCajaChica()">
+                <div style="display: inline-flex;">
+                    <div>
+                        <mat-form-field appearance="fill" class="mat-form-field-concepto">
+                            <mat-label>Concepto</mat-label>
+                            <mat-select [(value)]="idConceptoC" formControlName="concepto" required>
+                                <mat-option value="1">Entrada</mat-option>
+                                <mat-option value="2">Salida</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+        
+                        <mat-form-field appearance="fill" class="mat-form-field-autoriza">
+                            <mat-label>Autoriza</mat-label>
+                            <mat-select [(value)]="idAutoriza" formControlName="autoriza" required>
+                                <mat-option *ngFor="let p of (personal$ | async)" [value]="p.idPersonal">
+                                    {{p.nombre}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+        
+                        <mat-form-field appearance="fill" class="mat-form-field-recibe">
+                            <mat-label>Recibe</mat-label>
+                            <mat-select [(value)]="idRecibe" formControlName="recibe" required>
+                                <mat-option *ngFor="let p of (personal$ | async)" [value]="p.idPersonal">
+                                    {{p.nombre}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill" class="mat-form-field-comprobanteTipo">
+                            <mat-label>Tipo de comprobante</mat-label>
+                            <mat-select [(value)]="idComprobanteTipoC" formControlName="comprobanteTipo" (selectionChange)="evaluarProveedorSelect()">
+                                <mat-option *ngFor="let ct of (comprobanteTipos$ | async)" [value]="ct.idComprobanteTipo">
+                                    {{ct.nombre}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <p class="saldo-label">Q. {{saldoCajaChica.monto.toFixed(2)}}</p>
+                    </div>
+                </div>
+                <div>
+                    
+                    <mat-form-field appearance="fill" class="mat-form-field-facturaCompra">
+                        <mat-label>Factura</mat-label>
+                        <mat-select [(value)]="facturaCompraMenorSelected" formControlName="facturaCompra" required (selectionChange)="evaluarFacturaCompraSelect()">
+                            <mat-option *ngFor="let fc of (facturasCompraMenor$ | async)" [value]="fc">
+                                {{fc.codigo}} - {{fc.proveedorMenor.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-numeroComprobante" appearance="outline">
+                        <mat-label>Número de comprobante</mat-label>
+                        <input matInput formControlName="numeroComprobante">
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-descripcion" appearance="outline">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput formControlName="descripcion" required></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-monto input-wrapper" appearance="outline">
+                        <mat-label>Monto</mat-label>
+                        <span class="input-currency">Q.</span>
+                        <input matInput formControlName="monto" type="number" min="0" step="0.01" required
+                        (change)="setTwoNumberDecimal($event)">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarCajaChica()" style="margin-right: 5px;">Guardar</button>
+                    <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="limpiarFormCajaChica()">Nuevo</button>
+                </div>
+                
+            </form>
+        </div><br>
+        <mat-divider></mat-divider>
+        <div class="caja-chica-busqueda-container">
+            <p class="busqueda-label"><b>Búsqueda de caja chica</b></p>
+            <mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+                <mat-radio-button value="1">Tipo de comprobante</mat-radio-button>
+                <mat-radio-button value="2">Servicio</mat-radio-button>
+                <mat-radio-button value="4">Fecha</mat-radio-button>
+                <mat-radio-button value="5">Todos</mat-radio-button>
+            </mat-radio-group>
+            <form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscarCajaChica()">
+                <mat-form-field appearance="fill" class="mat-form-field-comprobanteTipo">
+                    <mat-label>Tipo de comprobante</mat-label>
+                    <mat-select [(value)]="idComprobanteTipoB" formControlName="comprobanteTipo" required>
+                        <mat-option *ngFor="let ct of (comprobanteTipos$ | async)" [value]="ct.idComprobanteTipo">
+                            {{ct.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-servicio">
+                    <mat-label>Servicio</mat-label>
+                    <mat-select [(value)]="idServicio" formControlName="servicio" required>
+                        <mat-option *ngFor="let s of (servicios$ | async)" [value]="s.idServicio">
+                            {{s.correlativo}} - {{s.placa.numero}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                    <mat-label>Inicio</mat-label>
+                    <input matInput [matDatepicker]="pickerInicio" [max]="maxFecha"
+                        value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicio></mat-datepicker>
+                </mat-form-field>
+            
+                <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                    <mat-label>Fin</mat-label>
+                    <input matInput [matDatepicker]="pickerFin" [max]="maxFecha"
+                        value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFin></mat-datepicker>
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscarCajaChica()">Buscar</button>
+                <button mat-button color="primary" type="button" [disabled]="verBotonReporte()" (click)="crearReporteCajaChica()">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </form>
+        </div>
+        <div class="caja-chica-mat-table-container">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef='fechaIngreso'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Ingreso</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fechaIngreso}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='concepto'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Concepto</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.concepto.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='monto'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+                    <mat-cell *matCellDef="let row">Q. {{row.monto.toFixed(2)}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='autoriza'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Autoriza</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.autoriza.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='recibe'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Recibe</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.recibe.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='descripcion'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descripcion}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='comprobanteTipo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de comprobante</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.comprobanteTipo.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='acciones'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="primary" (click)="abrirDialogoEditar(row)" class="mat-button-accion" [disabled]="loaderService.isLoading.value">
+                            <mat-icon>ballot</mat-icon>
+                        </button>
+                        <button mat-button color="warn" (click)="abrirDialogoEliminar(row)" class="mat-button-accion" [disabled]="loaderService.isLoading.value">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>

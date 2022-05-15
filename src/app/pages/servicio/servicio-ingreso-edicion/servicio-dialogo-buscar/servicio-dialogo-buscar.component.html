@@ -1,0 +1,63 @@
+<form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscar()">
+    <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+        <mat-label>Sucursal</mat-label>
+        <mat-select [(value)]="idSucursal" formControlName="sucursal" required>
+            <mat-option value="0">TODOS</mat-option>
+            <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                {{s.nombre}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="mat-form-field-segmento">
+        <mat-label>Segmento</mat-label>
+        <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+            <mat-option value="0">TODOS</mat-option>
+            <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                {{s.nombre}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-button color="primary" type="submit" [disabled]="frmBusqueda.invalid">
+        <mat-icon>search</mat-icon>
+    </button>
+</form>
+<mat-table [dataSource]="dataSource" class="mat mat-elevation-z8">
+    <ng-container matColumnDef='correlativo'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Correlativo</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.correlativo}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='fecha'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.fechaHora}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='servicioTipo'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de servicio</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.servicioTipo.nombre}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='sucursal'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.sucursal.nombre}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='segmento'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Segmento</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.segmento.nombre}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='placa'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Placa</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.placa.numero}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef='costo'>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Costo</mat-header-cell>
+        <mat-cell *matCellDef="let row">Q. {{row.costoTotal.toFixed(2)}}</mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="cerrar(true, row)"></mat-row>
+</mat-table>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

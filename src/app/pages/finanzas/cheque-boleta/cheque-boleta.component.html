@@ -1,0 +1,295 @@
+<mat-card dynamicHeight style="padding: 30px;">
+    <mat-card-content>
+        <p class="cheque-label"><b>CHEQUES</b></p>
+        <div class="controles-busqueda-cheque-container">
+            <mat-radio-group [(ngModel)]="idBusquedaCheque" (change)="setInputsCheque()">
+                <mat-radio-button value="1">Banco</mat-radio-button>
+                <mat-radio-button value="2">Cuenta Bancaria</mat-radio-button>
+                <mat-radio-button value="3">Nombre</mat-radio-button>
+                <mat-radio-button value="4">Número</mat-radio-button>
+                <mat-radio-button value="5">Fecha Emisión</mat-radio-button>
+                <mat-radio-button value="6">Fecha Depósito</mat-radio-button>
+                <mat-radio-button value="7">Boleta</mat-radio-button>
+            </mat-radio-group>
+            <form [formGroup]="formBusquedaCheque" #frmBusqueda="ngForm" (ngSubmit)="buscarCheque()">
+                <div>
+                    <mat-form-field appearance="fill" class="mat-form-field-banco">
+                        <mat-label>Banco</mat-label>
+                        <mat-select [(value)]="idBancoBCheque" formControlName="banco" required>
+                            <mat-option *ngFor="let b of (bancos$ | async)" [value]="b.idBanco">
+                                {{b.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill" class="mat-form-field-cuentaBancaria">
+                        <mat-label>Cuenta Bancaria</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaBCheque" formControlName="cuentaBancaria" required>
+                            <mat-option *ngFor="let cb of (cuentasBancarias$ | async)" [value]="cb.idCuentaBancaria">
+                                {{cb.banco.nombre}} - {{cb.numero}} - {{cb.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="mat-form-field-nombreNumero">
+                        <input matInput placeholder="Nombre o número" formControlName="nombreNumero" required>
+                    </mat-form-field>
+        
+                    <mat-form-field class="mat-form-field-fecha-inicio">
+                        <input matInput [matDatepicker]="pickerInicio" placeholder="Inicio" [max]="maxFecha"
+                            value="fechaInicioChequeSeleccionada" (dateChange)="cambiarFechaInicioCheque($event)" formControlName="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerInicio></mat-datepicker>
+                    </mat-form-field>
+                
+                    <mat-form-field class="mat-form-field-fecha-fin">
+                        <input matInput [matDatepicker]="pickerFin" placeholder="Fin" [max]="maxFecha"
+                            value="fechaFinChequeSeleccionada" (dateChange)="cambiarFechaFinCheque($event)" formControlName="fechaFin">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerFin></mat-datepicker>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill" class="mat-form-field-boleta">
+                        <mat-label>Boleta</mat-label>
+                        <mat-select [(value)]="idBoletaB" formControlName="boleta" required>
+                            <mat-option value="1">CON BOLETA</mat-option>
+                            <mat-option value="2">SIN BOLETA</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <button mat-flat-button color="primary" type="submit" [disabled]="frmBusqueda.invalid">Buscar</button>
+                </div>
+            </form>
+        </div>
+        <div class="formulario-ingreso-cheque-container">
+            <div class="ingreso-cheque-container">
+                <b>Formulario de ingreso</b><br><br>
+                <form [formGroup]="formIngresoCheque" #frmIngresoCheque="ngForm" (ngSubmit)="guardarCheque()">
+                    <mat-form-field appearance="fill" class="mat-form-field-cuenta-bancaria">
+                        <mat-label>Cuenta Bancaria</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaCCheque" formControlName="cuentaBancaria" required>
+                            <mat-option *ngFor="let cb of (cuentasBancarias$ | async)" [value]="cb.idCuentaBancaria">
+                                {{cb.banco.nombre}} - {{cb.numero}} - {{cb.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-numero">
+                        <input matInput placeholder="Número de cheque" formControlName="numero" type="number" min="0" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-monto">
+                        <input matInput placeholder="Monto" formControlName="monto" type="number" min="0" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-fecha-emision">
+                        <input matInput [matDatepicker]="pickerEmision" placeholder="Fecha de emisión" [max]="maxFecha"
+                            value="fechaEmisionSeleccionada" (dateChange)="cambiarFechaEmision($event)" formControlName="fechaEmision" required>
+                        <mat-datepicker-toggle matSuffix [for]="pickerEmision"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerEmision></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-fecha-deposito">
+                        <input matInput [matDatepicker]="pickerDeposito" placeholder="Fecha de depósito" [max]="maxFecha"
+                            value="fechaDepositoSeleccionada" (dateChange)="cambiarFechaDeposito($event)" formControlName="fechaDeposito">
+                        <mat-datepicker-toggle matSuffix [for]="pickerDeposito"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerDeposito></mat-datepicker>
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" type="button" style="width: 32%; margin-right: 1%;" (click)="limpiarFormCheque()">Nuevo</button>
+                    <button mat-flat-button color="primary" type="submit" style="width: 33%; margin-right: 1%;" [disabled]="frmIngresoCheque.invalid">Guardar</button>
+                    <button mat-flat-button color="warn" type="button" style="width: 33%;" [disabled]="evaluarBotonEliminarCheque()" (click)="eliminarCheque()">Eliminar</button>
+                </form>
+            </div>
+            <div class="table-cheque-container">
+                <mat-table [dataSource]="dataSourceCheque" class="mat-table-cheques mat-elevation-z8">
+
+                    <ng-container matColumnDef='banco'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Banco</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.cuentaBancaria.banco.nombre}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef='noCuenta'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>No Cuenta</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.cuentaBancaria.numero}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='noCheque'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>No Cheque</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.numero}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='fechaEmision'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Emisión</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.fechaEmision}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='fechaDeposito'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Depósito</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.fechaDeposito}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='monto'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+                        <mat-cell *matCellDef="let row">Q. {{row.monto.toFixed(2)}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsCheque; sticky : true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsCheque;" (click)="cargarCheque(row)"></mat-row>
+                </mat-table>
+            </div>
+        </div>
+        <mat-divider></mat-divider><br><br>
+        <p class="cheque-label"><b>BOLETAS</b></p>
+        <div class="controles-busqueda-boleta-container">
+            <mat-radio-group [(ngModel)]="idBusquedaBoleta" (change)="setInputsBoleta()">
+                <mat-radio-button value="1">Banco destino</mat-radio-button>
+                <mat-radio-button value="2">Cuenta Bancaria</mat-radio-button>
+                <mat-radio-button value="3">Número de boleta</mat-radio-button>
+                <mat-radio-button value="4">Tipo de documento</mat-radio-button>
+                <mat-radio-button value="5">Fecha</mat-radio-button>
+            </mat-radio-group>
+            <form [formGroup]="formBusquedaBoleta" #frmBusquedaBoleta="ngForm" (ngSubmit)="buscarBoleta()">
+                <div>
+                    <mat-form-field appearance="fill" class="mat-form-field-banco">
+                        <mat-label>Banco</mat-label>
+                        <mat-select [(value)]="idBancoBBoleta" formControlName="banco" required>
+                            <mat-option *ngFor="let b of (bancos$ | async)" [value]="b.idBanco">
+                                {{b.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill" class="mat-form-field-cuentaBancaria">
+                        <mat-label>Cuenta Bancaria</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaBBoleta" formControlName="cuentaBancaria" required>
+                            <mat-option *ngFor="let cb of (cuentasBancarias$ | async)" [value]="cb.idCuentaBancaria">
+                                {{cb.banco.nombre}} - {{cb.numero}} - {{cb.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="mat-form-field-numero-boleta-buscar">
+                        <input matInput placeholder="Número de boleta" formControlName="numero" required>
+                    </mat-form-field>
+        
+                    <mat-form-field class="mat-form-field-fecha-inicio">
+                        <input matInput [matDatepicker]="pickerInicioBoleta" placeholder="Inicio" [max]="maxFecha"
+                            value="fechaInicioBoletaSeleccionada" (dateChange)="cambiarFechaInicioBoleta($event)" formControlName="fechaInicio">
+                        <mat-datepicker-toggle matSuffix [for]="pickerInicioBoleta"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerInicioBoleta></mat-datepicker>
+                    </mat-form-field>
+                
+                    <mat-form-field class="mat-form-field-fecha-fin">
+                        <input matInput [matDatepicker]="pickerFinBoleta" placeholder="Fin" [max]="maxFecha"
+                            value="fechaFinBoletaSeleccionada" (dateChange)="cambiarFechaFinBoleta($event)" formControlName="fechaFin">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFinBoleta"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerFinBoleta></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-tipoDocumento">
+                        <mat-label>Tipo de documento</mat-label>
+                        <mat-select [(value)]="idBoletaTipoDocumentoB" formControlName="documentoTipo" required>
+                            <mat-option *ngFor="let btd of (boletaTipoDocumentos$ | async)" [value]="btd.idBoletaTipoDocumento">
+                                {{btd.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" type="submit" [disabled]="frmBusquedaBoleta.invalid">Buscar</button>
+                </div>
+            </form>
+        </div>
+        <div class="formulario-ingreso-boleta-container">
+            <div class="ingreso-boleta-container">
+                <b>Formulario de ingreso</b><br><br>
+                <form [formGroup]="formIngresoBoleta" #frmIngresoBoleta="ngForm" (ngSubmit)="guardarBoleta()">
+
+                    <mat-form-field appearance="fill" class="mat-form-field-cuenta-bancaria">
+                        <mat-label>Cuenta Bancaria Destino</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaCBoleta" formControlName="cuentaBancaria" required>
+                            <mat-option *ngFor="let cb of (cuentasBancarias$ | async)" [value]="cb.idCuentaBancaria">
+                                {{cb.banco.nombre}} - {{cb.numero}} - {{cb.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="fill" class="mat-form-field-tipo-documento">
+                        <mat-label>Tipo de documento</mat-label>
+                        <mat-select [(value)]="idBoletaTipoDocumentoC" formControlName="documentoTipo" (selectionChange)="verChequeMonto()" required>
+                            <mat-option *ngFor="let btd of (boletaTipoDocumentos$ | async)" [value]="btd.idBoletaTipoDocumento">
+                                {{btd.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field class="mat-form-field-numero-boleta">
+                        <input matInput placeholder="Número de boleta" formControlName="numero" type="number" min="0" required>
+                    </mat-form-field>
+    
+                    <mat-form-field class="mat-form-field-fecha">
+                        <input matInput [matDatepicker]="picker" placeholder="Fecha" [max]="maxFecha"
+                            value="fechaSeleccionada" (dateChange)="cambiarFecha($event)" formControlName="fecha" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-monto-boleta">
+                        <input matInput placeholder="Monto" formControlName="monto" type="number" min="0" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-cheque">
+                        <mat-label>Cheque</mat-label>
+                        <mat-select [(value)]="idChequeNotInBoleta" formControlName="cheque" (selectionChange)="cargarMontoCheque()" required>
+                            <mat-option *ngFor="let c of (chequesNotInBoletas$ | async)" [value]="c.idCheque">
+                                {{c.cuentaBancaria.banco.nombre}}/{{c.cuentaBancaria.nombre}}/{{c.numero}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" type="button" style="width: 32%; margin-right: 1%;" (click)="limpiarFormBoleta()">Nuevo</button>
+                    <button mat-flat-button color="primary" type="submit" style="width: 33%; margin-right: 1%;" [disabled]="frmIngresoBoleta.invalid">Guardar</button>
+                    <button mat-flat-button color="warn" type="button" style="width: 33%;" [disabled]="evaluarBotonEliminarBoleta()" (click)="eliminarBoleta()">Eliminar</button>
+                </form>
+            </div>
+            <div class="table-boleta-container">
+                <mat-table [dataSource]="dataSourceBoleta" class="mat-table-boletas mat-elevation-z8">
+                    <ng-container matColumnDef='banco'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Banco Destino</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.cuentaBancaria.banco.nombre}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef='noCuenta'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>No Cuenta Destino</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.cuentaBancaria.numero}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='noBoleta'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>No Boleta</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.numero}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='documentoTipo'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Documento</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.boletaTipoDocumento.nombre}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='fecha'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef='monto'>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+                        <mat-cell *matCellDef="let row">Q. {{row.monto.toFixed(2)}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsBoleta; sticky : true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsBoleta;" (click)="cargarBoleta(row)"></mat-row>
+                </mat-table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

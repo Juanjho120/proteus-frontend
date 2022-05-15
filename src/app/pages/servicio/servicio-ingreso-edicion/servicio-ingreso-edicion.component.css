@@ -1,0 +1,101 @@
+.total-servicio-label {
+    font-size: 30px;
+}
+
+.mat-card {
+    width: 97%;
+    padding: 20px;
+}
+
+.mat-form-field-segmento {
+    width: 100%;
+}
+
+.mat-form-field-placa {
+    margin-right: 20px;
+}
+
+.mat-form-field-kilometraje-actual {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-kilometraje-proximo {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-placa {
+    width: 200px;
+}
+
+.button-grid {
+    width: 100px;
+}
+
+.fecha-label {
+    margin: 0px;
+    font-size: 12px;
+}
+
+.servicio-detalle-container {
+    display: flex;
+    margin: 10px;
+}
+
+.servicio-trabajo-container {
+    margin: 10px;
+    width: 535px;
+}
+
+.servicio-trabajo-content-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.servicio-repuesto-container {
+    margin: 10px;
+    width: 580px;
+}
+
+.servicio-repuesto-content-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-form-field-descripcion-trabajo {
+    margin-right: 15px;
+    width: 300px;
+}
+
+.mat-form-field-costo-trabajo {
+    margin-right: 15px;
+    width: 100px;
+}
+
+.mat-form-field-repuesto {
+    margin-right: 10px;
+    width: 300px;
+}
+
+.mat-form-field-cantidad-repuesto {
+    margin-right: 10px;
+    width: 55px;
+}
+
+.mat-form-field-costo-repuesto {
+    margin-right: 10px;
+    width: 80px;
+}
+
+.mat-grid-tile-header {
+    background: lightblue;
+}
+
+.mat-grid-tile-content {
+    background: white;
+}
+
+.total-detalle-label {
+    margin-left: 270px;
+}

@@ -1,0 +1,41 @@
+<div class="flex-container">
+    <mat-card class="mat-elevation-z10">
+        <mat-card-content>
+            <div class="icon-text">
+                <mat-icon color="primary" class="mat-icon-person-icon">person_pin</mat-icon>
+            </div><br>
+            <div style="display: inline; margin-bottom: 100px;">
+                <form [formGroup]="formLogin" #frmLogin="ngForm" (ngSubmit)="login()">
+                    <div class="form-field-username-container">
+                        <div style="vertical-align: baseline;">
+                            <mat-icon color="basic" class="mat-icon-form-field">person</mat-icon>
+                        </div>
+                        <div>
+                            <mat-form-field class="mat-form-field-username">
+                                <input matInput required formControlName="username" required placeholder="Username">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-field-password-container">
+                        <div style="vertical-align: baseline;">
+                            <mat-icon color="basic" class="mat-icon-form-field">lock</mat-icon>
+                        </div>
+                        <div>
+                            <mat-form-field class="mat-form-field-password">
+                                <input matInput required formControlName="password" required type="password" placeholder="Password">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div style="display: inline; text-align: right;">
+                        <p class="correo-link-container"><a routerLink="/recuperar">¿Olvidaste la contraseña?</a></p>
+                    </div>
+                    <div>
+                        <button mat-flat-button color="primary" type="submit" [disabled]="logingButtonDisable()">Iniciar Sesión</button>
+                    </div>
+                </form>
+            </div>
+            
+        </mat-card-content>
+    </mat-card>
+</div>

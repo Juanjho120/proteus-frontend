@@ -1,0 +1,23 @@
+.mat-form-field {
+    width : 100%;
+}
+
+.mat-form-field-monto {
+    text-align: right;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

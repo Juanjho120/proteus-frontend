@@ -1,0 +1,42 @@
+.container {
+    margin : 20px;
+    padding: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.mat-form-field-tipo-autorizacion {
+    margin-right: 20px;
+    width: 400px;
+}
+
+.mat-form-field-usuario {
+    margin-right: 20px;
+    width: 220px;
+}
+
+.mat-form-field-correlativo {
+    margin-right: 20px;
+    width: 200px;
+}
+
+.mat-form-field-numero {
+    margin-right: 20px;
+    width: 300px;
+}
+
+.mat-form-field-segmento {
+    margin-right: 20px;
+    width: 450px;
+}
+
+.mat-form-field-fecha-inicio {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-fin {
+    width: 180px;
+    margin-right: 20px;
+}

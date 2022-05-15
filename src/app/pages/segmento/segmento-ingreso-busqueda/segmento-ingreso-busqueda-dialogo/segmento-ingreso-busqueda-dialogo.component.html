@@ -1,0 +1,30 @@
+<div>
+    <form [formGroup]="form" #frmSegmento="ngForm" (ngSubmit)="operar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput required formControlName="codigo" style="text-transform:uppercase;">
+            <small *ngIf="f().codigo.errors?.required && f().codigo.touched" class="invalido">Código es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput required formControlName="nombre" style="text-transform:uppercase;">
+            <small *ngIf="f().nombre.errors?.required && f().nombre.touched" class="invalido">Nombre es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nit</mat-label>
+            <input matInput required formControlName="nit" style="text-transform:uppercase;">
+            <small *ngIf="f().nit.errors?.required && f().nit.touched" class="invalido">Nit es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Dirección Fiscal</mat-label>
+            <textarea matInput required formControlName="direccionFiscal" style="text-transform:uppercase;"></textarea>
+            <small *ngIf="f().direccionFiscal.errors?.required && f().direccionFiscal.touched" class="invalido">Direccion es requerido</small>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmSegmento.invalid">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

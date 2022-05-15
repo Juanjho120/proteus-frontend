@@ -1,0 +1,73 @@
+.checklist-container {
+    padding: 5px;
+    overflow: auto;
+}
+
+.title-checklist {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.info-checklist {
+    margin: 0px;
+    font-size: 13px;
+}
+
+.detalle-title-checklist {
+    font-size: 12px;
+    margin: 0px;
+}
+
+.detalle-checklist {
+    margin-top: 10px;
+    display: flex;
+    overflow: auto;
+    max-height: 550px;
+}
+
+.detalle-mecanico-checklist {
+    width: 49%;
+    margin-right: 5px;
+}
+
+.detalle-electrico-checklist {
+    width: 49%;
+    margin-left: 5px;
+}
+
+.mat-grid-tile-content ::ng-deep figure {
+    justify-content: left!important;
+}
+
+.mat-grid-tile-content-detalle ::ng-deep figure {
+    justify-content: left!important;
+    font-size: 10px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.mat-grid-tile-evaluacion ::ng-deep figure {
+    font-size: 10px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.mat-grid-tile-header {
+    background: lightblue;
+    font-size: 11px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.lightgreen {
+    background-color: lightgreen;
+}
+
+.lightcoral {
+    background-color: lightcoral;
+}
+
+.lightgray {
+    background-color: lightgray;
+}

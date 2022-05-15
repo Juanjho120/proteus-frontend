@@ -1,0 +1,192 @@
+.cheque-label {
+    font-size: 15px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-form-field-banco {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-cuentaBancaria {
+    width: 600px;
+    margin-right: 20px;
+}
+
+.mat-form-field-nombreNumero {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-inicio {
+    width: 110px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-fin {
+    width: 110px;
+    margin-right: 20px;
+}
+
+.formulario-ingreso-cheque-container {
+    border-style: ridge;
+    border-width: 1px;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.formulario-ingreso-boleta-container {
+    border-style: ridge;
+    border-width: 1px;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.ingreso-cheque-container {
+    width: 30%;
+    padding: 20px;
+}
+
+.ingreso-boleta-container {
+    width: 30%;
+    padding: 20px;
+}
+
+.table-cheque-container {
+    width: 70%;
+    margin: 10px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.table-boleta-container {
+    width: 70%;
+    margin: 10px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-form-field-cuenta-bancaria {
+    width: 100%;
+}
+
+.mat-form-field-numero {
+    width: 45%;
+    margin-right: 10%;
+}
+
+.mat-form-field-monto {
+    width: 45%;
+}
+
+.mat-form-field-fecha-emision {
+    width: 45%;
+    margin-right: 10%;
+}
+
+.mat-form-field-fecha-deposito {
+    width: 45%;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-table-cheques {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.mat-table-boletas {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.mat-column-banco {
+    justify-content: center;
+}
+
+.mat-column-noCuenta {
+    justify-content: center;
+}
+
+.mat-column-noCheque {
+    justify-content: center;
+}
+
+.mat-column-fechaEmision {
+    flex: 0 0 11%;
+    justify-content: center;
+}
+
+.mat-column-fechaDeposito {
+    flex: 0 0 11%;
+    justify-content: center;
+}
+
+.mat-column-monto {
+    flex: 0 0 10%;
+    justify-content: flex-end;
+}
+
+.mat-form-field-boleta {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.mat-form-field-tipoDocumento {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-numero-boleta-buscar {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-tipo-documento {
+    width: 100%;
+}
+
+.mat-form-field-numero-boleta {
+    width: 100%;
+}
+
+.mat-form-field-fecha {
+    width: 45%;
+    margin-right: 10%;
+}
+
+.mat-form-field-monto-boleta {
+    width: 45%;
+}
+
+.mat-form-field-cheque {
+    width: 100%;
+}
+
+.mat-column-noBoleta {
+    justify-content: center;
+}
+
+.mat-column-documentoTipo {
+    justify-content: center;
+}
+
+.mat-column-fecha {
+    flex: 0 0 11%;
+    justify-content: center;
+}

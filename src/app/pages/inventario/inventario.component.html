@@ -1,0 +1,26 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Inventarios</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Ingreso y búsqueda">
+            <div class="inventario-ingreso-busqueda-container">
+                <div class="row" dynamicHeight>
+                    <div class="sm-col-12">
+                        <app-inventario-registro></app-inventario-registro>
+                    </div>
+                </div><br>
+                <div class="row" dynamicHeight>
+                    <div class="sm-col-12">
+                        <app-inventario-busqueda></app-inventario-busqueda>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Entrada y salida de productos">
+            <div class="inventario-entrada-salida-container" dynamicHeight>
+                <div class="inventario-entrada-salida-card-container" dynamicHeight>
+                    <app-inventario-entrada-salida></app-inventario-entrada-salida>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

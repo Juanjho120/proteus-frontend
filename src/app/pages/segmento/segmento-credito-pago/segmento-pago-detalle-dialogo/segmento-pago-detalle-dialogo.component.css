@@ -1,0 +1,113 @@
+.title-factura-container {
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.title-cheque-container {
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.title-transaccion-container {
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.title-efectivo-container {
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.cheque-container {
+    border-style: ridge;
+    border-width: 1px;
+    padding: 20px;
+    width: 700px;
+    display: none;
+}
+
+.efectivo-container {
+    border-style: ridge;
+    border-width: 1px;
+    padding: 20px;
+    width: 550px;
+    display: none;
+}
+
+.transaccion-container {
+    border-style: ridge;
+    border-width: 1px;
+    padding: 20px;
+    width: 730px;
+    display: none;
+}
+
+.documents-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mat-grid-tile-header {
+    background: lightblue;
+    font-size: 10px;
+}
+
+.text-inside-grid {
+    position: absolute;
+    left: 5px;
+}
+
+.mat-grid-tile-descripcion ::ng-deep figure {
+    justify-content: left!important;
+    margin-left: 7px;
+    background: white;
+    font-size: 10px;
+}
+
+.mat-grid-tile-descripcion-trabajo ::ng-deep figure {
+    justify-content: left!important;
+    margin-left: 7px;
+    background: white;
+    font-size: 8px;
+}
+
+.mat-grid-tile-costo ::ng-deep figure {
+    justify-content: flex-end!important;
+    margin-right: 7px;
+    background: white;
+    font-size: 10px;
+}
+
+.mat-grid-tile-content {
+    font-size: 10px;
+}
+
+.servicio-trabajo-repuesto-container {
+    display: flex;
+}
+
+.trabajo-container {
+    width: 410px;
+    margin: 5px;
+}
+
+.repuesto-container {
+    width: 560px;
+    margin: 5px;
+}
+
+.info-transaccion-container {
+    margin-top: 20px;
+}
+
+.info-efectivo-container {
+    margin-top: 20px;
+}
+
+.panel-container {
+    max-height: 325px;
+    overflow: auto;
+}

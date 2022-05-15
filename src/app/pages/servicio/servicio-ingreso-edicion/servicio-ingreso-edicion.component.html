@@ -1,0 +1,173 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <form [formGroup]="formServicio" #frmServicio="ngForm" (ngSubmit)="operar()">
+            <mat-grid-list cols="12" rowHeight = "70px">
+                <mat-grid-tile [colspan]="4" [rowspan]="1" class="mat-grid-tile-content">
+                    <mat-form-field appearance="fill" class="mat-form-field-segmento">
+                        <mat-label>Segmento</mat-label>
+                        <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                            <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                                {{s.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonCrear()" class="button-grid">Guardar</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                    <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="abrirServicioDialogoBuscar()" class="button-grid">Buscar</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                    <button mat-flat-button color="primary" type="button" [disabled]="loaderService.isLoading.value" (click)="limpiarControlServicio()" class="button-grid">Nuevo</button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                    <button mat-button color="accent" type="button" [disabled]="evaluarBotonEliminar()" (click)="abrirServicioDialogoEliminar()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">
+                    <p class="total-servicio-label">Q. {{totalServicio.toFixed(2)}}</p>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div>
+                <mat-form-field appearance="fill" class="mat-form-field-placa">
+                    <mat-label>Placa</mat-label>
+                    <mat-select [(value)]="idPlaca" formControlName="placa" required>
+                        <mat-option *ngFor="let p of (placas$ | async)" [value]="p.idPlaca">
+                            {{p.numero}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-servicio-tipo">
+                    <mat-label>Tipo de Servicio</mat-label>
+                    <mat-select [(value)]="idServicioTipo" formControlName="servicioTipo" required>
+                        <mat-option *ngFor="let st of (servicioTipos$ | async)" [value]="st.idServicioTipo">
+                            {{st.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="mat-form-field-kilometraje-actual" appearance="outline">
+                    <mat-label>Kilometraje Actual</mat-label>
+                    <input matInput required formControlName="kilometrajeActual" type="number" min="0">
+                </mat-form-field>
+
+                <mat-form-field class="mat-form-field-kilometraje-proximo" appearance="outline">
+                    <mat-label>Kilometraje Próximo</mat-label>
+                    <input matInput required formControlName="kilometrajeProximo" type="number" min="0">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+                    <mat-label>Sucursal</mat-label>
+                    <mat-select [(value)]="idSucursal" formControlName="sucursal" required>
+                        <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                            {{s.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <p class="fecha-label"><b>Fecha de creación: </b>{{servicio.fechaHora}}</p>
+        </form>
+        <br>
+        <mat-divider></mat-divider>
+        <div class="servicio-detalle-container">
+            <div class="servicio-trabajo-container">
+                <div class="servicio-trabajo-header-container">
+                    <form [formGroup]="formServicioTrabajo" #frmServicioTrabajo="ngForm" (ngSubmit)="agregarServicioTrabajo()">
+                        <mat-form-field class="mat-form-field-descripcion-trabajo">
+                            <mat-label>Descripción del trabajo</mat-label>
+                            <textarea matInput required formControlName="descripcion"></textarea>
+                        </mat-form-field>
+                        Q.
+                        <mat-form-field class="mat-form-field-costo-trabajo">
+                            <mat-label>Costo</mat-label>
+                            <input matInput required formControlName="costo" type="number" min="0" autocomplete="off">
+                        </mat-form-field>
+
+                        <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonAniadirTrabajo()">Añadir</button>
+                    </form>
+                </div>
+                <div class="servicio-trabajo-content-container">
+                    <mat-grid-list cols="10" rowHeight = "30px">
+                        <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-header"><b>Descripción del trabajo</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Costo</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"></mat-grid-tile>
+                    </mat-grid-list>
+                    <mat-grid-list cols="10" rowHeight = "40px" *ngFor="let st of servicioTrabajos; let i=index">
+                        <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-content">{{st.descripcionTrabajo}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{st.costo.toFixed(2)}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-button color="accent" type="button" (click)="removerServicioTrabajo(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <mat-grid-list cols="10" rowHeight = "30px">
+                        <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-content"><b>Total del trabajo</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Q. {{totalTrabajo.toFixed(2)}}</b></mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </div>
+            <div class="servicio-repuesto-container">
+                <div class="servicio-repuesto-header-container">
+                    <form [formGroup]="formServicioRepuesto" #frmServicioRepuesto="ngForm" (ngSubmit)="agregarServicioRepuesto()">
+                        <mat-form-field class="mat-form-field-cantidad-repuesto">
+                            <mat-label>Cant</mat-label>
+                            <input matInput required formControlName="cantidad" type="number" min="0" autocomplete="off">
+                        </mat-form-field>
+
+                        <mat-form-field class="mat-form-field-repuesto">
+                            <mat-label>Seleccione el repuesto</mat-label>
+                            <input type="text" matInput [matAutocomplete]="autoRepuesto" 
+                                [formControl]="myControlRepuesto" required formControlName="repuesto" autocomplete="off">
+                        </mat-form-field>
+            
+                        <mat-autocomplete #autoRepuesto="matAutocomplete" [displayWith]="mostrarRepuesto" (optionSelected)="seleccionarRepuesto($event)">
+                            <mat-option *ngFor="let r of repuestosFiltrados$ | async" [value]="r">
+                                {{ r.descripcion }}
+                            </mat-option>
+                        </mat-autocomplete>
+
+                        Q.
+                        <mat-form-field class="mat-form-field-costo-repuesto">
+                            <mat-label>Costo</mat-label>
+                            <input matInput required formControlName="costoUnitario" type="number" min="0" autocomplete="off">
+                        </mat-form-field>
+
+                        <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonAniadirRepuesto()">Añadir</button>
+                    </form>
+                </div>
+                <div class="servicio-repuesto-content-container">
+                    <mat-grid-list cols="12" rowHeight = "30px">
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"><b>Cant</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="6" [rowspan]="1" class="mat-grid-tile-header"><b>Repuesto</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Costo</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Subtotal</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"></mat-grid-tile>
+                    </mat-grid-list>
+                    <mat-grid-list cols="12" rowHeight = "50px" *ngFor="let sr of servicioRepuestos; let i=index">
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">{{sr.cantidad}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="6" [rowspan]="1" class="mat-grid-tile-content">{{sr.repuesto.descripcion}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{sr.costoUnitario.toFixed(2)}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{sr.costoTotal.toFixed(2)}}</mat-grid-tile>
+                        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">
+                            <button mat-button color="accent" type="button" (click)="removerServicioRepuesto(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <mat-grid-list cols="12" rowHeight = "30px">
+                        <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-content"><b>Total del repuesto</b></mat-grid-tile>
+                        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Q. {{totalRepuesto.toFixed(2)}}</b></mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

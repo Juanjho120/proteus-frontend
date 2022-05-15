@@ -1,0 +1,29 @@
+<div>
+    <form [formGroup]="form" #frmProveedor="ngForm" (ngSubmit)="operar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre del proveedor</mat-label>
+            <textarea matInput required formControlName="nombre" style="text-transform:uppercase;"></textarea>
+            <small *ngIf="f().nombre.errors?.required && f().nombre.touched" class="invalido">Nombre es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Dirección del proveedor</mat-label>
+            <textarea matInput required formControlName="direccion" dynamicHeight style="text-transform:uppercase;"></textarea>
+            <small *ngIf="f().direccion.errors?.required && f().direccion.touched" class="invalido">Direccion es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Teléfono del proveedor</mat-label>
+            <input matInput required formControlName="telefono" type="number">
+            <small *ngIf="f().telefono.errors?.required && f().telefono.touched" class="invalido">Telefono es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nit del proveedor</mat-label>
+            <input matInput formControlName="nit" style="text-transform:uppercase;">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" style="margin-right: 5px;" type="submit" [disabled]="frmProveedor.invalid">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

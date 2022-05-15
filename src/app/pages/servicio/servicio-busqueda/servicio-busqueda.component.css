@@ -1,0 +1,135 @@
+.mat-card {
+    width: 97%;
+    padding: 20px;
+}
+
+.section-checkbox {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.mat-checkbox {
+    margin: 15px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 5px;
+    margin-left: 40px;
+    margin-bottom: 25px;
+}
+
+.mat-radio-group {
+    margin-left: 10px;
+}
+
+.mat-form-field-segmento {
+    margin-right: 25px;
+    width: 300px;
+}
+
+.mat-form-field-servicio-tipo {
+    margin-right: 25px;
+    width: 200px;
+}
+
+.mat-form-field-placa {
+    margin-right: 25px;
+    width: 200px;
+}
+
+.mat-form-field-fecha-inicio {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.mat-form-field-fecha-fin {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.mat-form-field-sucursal {
+    width: 250px;
+    margin-right: 20px;
+}
+
+.buscar-label {
+    font-size: 13px;
+}
+
+.mat-table-container {
+    margin-top: 20px;
+}
+
+.mat-column-noServicio {
+    flex: 0 0 75px;
+}
+
+.mat-column-fecha {
+    flex : 0 0 90px;
+}
+
+.mat-column-servicioTipo {
+    flex : 0 0 100px;
+}
+
+.mat-column-placa {
+    flex : 0 0 90px;
+}
+
+.mat-column-proximoServicio {
+    flex : 0 0 90px;
+}
+
+.mat-column-costoTrabajo {
+    flex : 0 0 90px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-column-costoRepuesto {
+    flex : 0 0 100px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-column-costoTotal {
+    flex : 0 0 110px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-header-cell {
+    font-size: 13px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-column-facturar {
+    flex : 0 0 50px;
+    text-align: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.mat-column-finalizar {
+    flex : 0 0 50px;
+    text-align: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.hide-button {
+    visibility: hidden;
+}
+
+.show-button {
+    visibility: visible;
+}
+
+.mat-table {
+    height: 300px;
+    overflow: auto;
+}

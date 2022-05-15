@@ -1,0 +1,102 @@
+<div class="documents-container">
+    <div class="cheque-container" id="div-cheque-container">
+        <div class="title-cheque-container">
+            <p style="text-align: center; font-size: 20px;"><b>CHEQUE</b></p>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="info-cheque-container">
+            <mat-grid-list cols="2" rowHeight = "40px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <h3><u>DETALLE DE CHEQUE</u></h3>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <h3><u>CUENTA BANCARIA</u></h3>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight = "20px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <b>Cheque No: </b>{{cheque.numero}}
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        {{cheque.cuentaBancaria.banco.nombre}}
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight = "20px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <b>Monto: </b>Q. {{cheque.monto.toFixed(2)}}
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        {{cheque.cuentaBancaria.numero}}
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight = "20px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <b>Fecha de emisión: </b>{{cheque.fechaEmision}}
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        {{cheque.cuentaBancaria.nombre}}
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight = "20px">
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <b>Fecha de depósito: </b>{{cheque.fechaDeposito}}
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <div class="text-inside-grid">
+                        <b>Boleta No: </b>{{boleta.numero}}
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+    <div class="transaccion-container" id="div-transaccion-container">
+        TRANSACCION CONTAINER
+    </div>
+</div>
+<div class="title-factura-container">
+    <b>FACTURAS PAGADAS</b>
+</div>
+<div class="panel-container">
+    <mat-expansion-panel *ngFor="let ppd of pagoProveedor.pagoProveedorDetalle">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                FACTURA {{ppd.creditoProveedorDetalle.facturaCompra.codigo}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p style="margin: 0px;"><b>Total: </b>Q. {{ppd.creditoProveedorDetalle.facturaCompra.total.toFixed(2)}}</p>
+        <p style="margin: 0px;"><b>Fecha de factura: </b>{{ppd.creditoProveedorDetalle.facturaCompra.fecha}}</p>
+        <br>
+        <mat-grid-list cols="12" rowHeight = "30px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"><b>Cant</b></mat-grid-tile>
+            <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-header"><b>Repuesto</b></mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Marca</b></mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Unitario</b></mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Subtotal</b></mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight = "50px" *ngFor="let fd of ppd.creditoProveedorDetalle.facturaCompra.facturaCompraDetalle">
+            <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">{{fd.cantidad}}</mat-grid-tile>
+            <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-content">{{fd.repuesto.descripcion}}</mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">{{fd.marcaRepuesto.nombre}}</mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{fd.costoUnitario.toFixed(2)}}</mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{fd.costoTotal.toFixed(2)}}</mat-grid-tile>
+        </mat-grid-list>
+    </mat-expansion-panel>
+</div>

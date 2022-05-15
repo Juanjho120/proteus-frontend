@@ -1,0 +1,338 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <p class="ingreso-label"><b>Ingreso de cuentas bancarias</b></p>
+        <div class="cuenta-bancaria-ingreso-container">
+            <form [formGroup]="formCuentaBancaria" #frmCuentaBancaria="ngForm" (ngSubmit)="guardarCuentaBancaria()">
+                <mat-form-field appearance="fill" class="mat-form-field-categoria">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select [(value)]="idCategoriaC" formControlName="categoria" required (selectionChange)="cargarEntidades()">
+                        <mat-option *ngFor="let c of (categorias$ | async)" [value]="c.idCategoria">
+                            {{c.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="mat-form-field-entidad">
+                    <mat-label>Entidad</mat-label>
+                    <mat-select [(value)]="entidadSeleccionada" formControlName="entidad" required>
+                        <mat-option *ngFor="let e of (entidades$ | async)" [value]="e">
+                            {{e.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarCuentaBancaria()">Guardar</button>
+                <button mat-flat-button color="primary" type="button" (click)="limpiarFormCuentaBancaria()" [disabled]="loaderService.isLoading.value">Nuevo</button>
+                <div>
+                    <mat-form-field class="mat-form-field-noCuenta" appearance="outline">
+                        <mat-label>No de Cuenta</mat-label>
+                        <input matInput formControlName="noCuenta" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-nombreCuenta" appearance="outline">
+                        <mat-label>Nombre de Cuenta</mat-label>
+                        <input matInput formControlName="nombreCuenta" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-banco">
+                        <mat-label>Banco</mat-label>
+                        <mat-select [(value)]="idBancoC" formControlName="banco" required>
+                            <mat-option *ngFor="let b of (bancos$ | async)" [value]="b.idBanco">
+                                {{b.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-cuentaBancariaTipo">
+                        <mat-label>Tipo de cuenta</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaTipoC" formControlName="cuentaBancariaTipo" required>
+                            <mat-option *ngFor="let cbt of (cuentaBancariaTipos$ | async)" [value]="cbt.idCuentaBancariaTipo">
+                                {{cbt.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-moneda">
+                        <mat-label>Moneda</mat-label>
+                        <mat-select [(value)]="idMonedaC" formControlName="moneda" required>
+                            <mat-option *ngFor="let m of (monedas$ | async)" [value]="m.idMoneda">
+                                {{m.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="cuenta-bancaria-busqueda-container">
+            <p class="busqueda-label"><b>Búsqueda de cuentas bancarias</b></p>
+            <mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+                <mat-radio-button value="1">Categoría</mat-radio-button>
+                <mat-radio-button value="2">Proveedor</mat-radio-button>
+                <mat-radio-button value="3">Segmento</mat-radio-button>
+                <mat-radio-button value="4">Personal</mat-radio-button>
+                <mat-radio-button value="5">Nombre</mat-radio-button>
+                <mat-radio-button value="6">Banco</mat-radio-button>
+                <mat-radio-button value="7">Tipo de cuenta</mat-radio-button>
+                <mat-radio-button value="8">Moneda</mat-radio-button>
+            </mat-radio-group>
+            <form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscarCuentaBancaria()">
+                <div>
+                    <mat-form-field appearance="fill" class="mat-form-field-categoria">
+                        <mat-label>Categoría</mat-label>
+                        <mat-select [(value)]="idCategoriaB" formControlName="categoria" required (selectionChange)="cargarEntidades()">
+                            <mat-option *ngFor="let c of (categorias$ | async)" [value]="c.idCategoria">
+                                {{c.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-banco">
+                        <mat-label>Banco</mat-label>
+                        <mat-select [(value)]="idBancoB" formControlName="banco" required>
+                            <mat-option *ngFor="let b of (bancos$ | async)" [value]="b.idBanco">
+                                {{b.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscarCuentaBancaria()">Buscar</button>
+                </div>
+                <div>
+                    <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                        <mat-label>Proveedor</mat-label>
+                        <mat-select [(value)]="idProveedor" formControlName="proveedor" required>
+                            <mat-option *ngFor="let p of (proveedores$ | async)" [value]="p.idProveedor">
+                                {{p.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-segmento">
+                        <mat-label>Segmento</mat-label>
+                        <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                            <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                                {{s.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                        <mat-label>Personal</mat-label>
+                        <mat-select [(value)]="idPersonal" formControlName="personal" required>
+                            <mat-option *ngFor="let p of (personal$ | async)" [value]="p.idPersonal">
+                                {{p.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="mat-form-field-nombre" appearance="outline">
+                        <mat-label>Nombre de cuenta</mat-label>
+                        <input matInput formControlName="nombre" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-cuentaBancariaTipo">
+                        <mat-label>Tipo de cuenta</mat-label>
+                        <mat-select [(value)]="idCuentaBancariaTipoB" formControlName="cuentaBancariaTipo" required>
+                            <mat-option *ngFor="let cbt of (cuentaBancariaTipos$ | async)" [value]="cbt.idCuentaBancariaTipo">
+                                {{cbt.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="mat-form-field-moneda">
+                        <mat-label>Moneda</mat-label>
+                        <mat-select [(value)]="idMonedaB" formControlName="moneda" required>
+                            <mat-option *ngFor="let m of (monedas$ | async)" [value]="m.idMoneda">
+                                {{m.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="cuenta-bancaria-table-container">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef='banco'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Banco</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.banco.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='tipoCuenta'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de cuenta</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.cuentaBancariaTipo.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='noCuenta'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Número</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.numero}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='nombre'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='moneda'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Moneda</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.moneda.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='acciones'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="primary" (click)="abrirDialogoEditar(row)" [disabled]="loaderService.isLoading.value">
+                            <mat-icon>ballot</mat-icon>
+                        </button>
+                        <button mat-button color="warn" (click)="abrirDialogoEliminar(row)" [disabled]="loaderService.isLoading.value">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="cuenta-bancaria-soporte-container">
+            <p class="busqueda-label"><b>SOPORTE DE OPCIONES</b></p>
+            <div class="cuenta-bancaria-cards-container">
+                <div class="banco-container">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Bancos</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="mat-table-bancos-container">
+                                <mat-table [dataSource]="dataSourceBancos" matSort class="mat-table-bancos">
+                                    <ng-container matColumnDef='nombre'>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                                    </ng-container>
+                                
+                                    <ng-container matColumnDef='acciones'>
+                                        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <button mat-button color="primary" (click)="abrirDialogoBancoEditar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-button color="warn" (click)="abrirDialogoBancoEliminar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+                                
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsBancos; sticky: true"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsBancos;"></mat-row>
+                                </mat-table>
+                            </div>
+                            <div class="register-banco-container">
+                                <form [formGroup]="formBanco" #frmBanco="ngForm" (ngSubmit)="guardarBanco()">
+                                    <mat-form-field>
+                                        <mat-label>Banco</mat-label>
+                                        <input matInput minlength="3" required formControlName="nombre">
+                                    </mat-form-field>
+                                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarBanco()" class="mat-flat-button-banco">Guardar</button>
+                                </form>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="cuenta-bancaria-tipo-container">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Tipos de cuenta</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="mat-table-cuenta-bancaria-tipos-container">
+                                <mat-table [dataSource]="dataSourceCuentaBancariaTipos" matSort class="mat-table-cuenta-bancaria-tipos">
+                                    <ng-container matColumnDef='nombre'>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                                    </ng-container>
+                                
+                                    <ng-container matColumnDef='acciones'>
+                                        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <button mat-button color="primary" (click)="abrirDialogoCuentaBancariaTipoEditar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-button color="warn" (click)="abrirDialogoCuentaBancariaTipoEliminar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+                                
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsCuentaBancariaTipos; sticky: true"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsCuentaBancariaTipos;"></mat-row>
+                                </mat-table>
+                            </div>
+                            <div class="register-cuenta-bancaria-tipo-container">
+                                <form [formGroup]="formCuentaBancariaTipo" #frmCuentaBancariaTipo="ngForm" (ngSubmit)="guardarCuentaBancariaTipo()">
+                                    <mat-form-field>
+                                        <mat-label>Tipo de cuenta</mat-label>
+                                        <input matInput minlength="3" required formControlName="nombre">
+                                    </mat-form-field>
+                                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarTipoCuenta()" class="mat-flat-button-cuenta-bancaria-tipo">Guardar</button>
+                                </form>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="moneda-container">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Monedas</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="mat-table-monedas-container">
+                                <mat-table [dataSource]="dataSourceMonedas" matSort class="mat-table-monedas">
+                                    <ng-container matColumnDef='simbolo'>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Símbolo</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.simbolo}}</mat-cell>
+                                    </ng-container>
+                                    
+                                    <ng-container matColumnDef='nombre'>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                                    </ng-container>
+                                
+                                    <ng-container matColumnDef='acciones'>
+                                        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <button mat-button color="primary" (click)="abrirDialogoMonedaEditar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button mat-button color="warn" (click)="abrirDialogoMonedaEliminar(row)" [disabled]="loaderService.isLoading.value">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+                                
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsMonedas; sticky: true"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsMonedas;"></mat-row>
+                                </mat-table>
+                            </div>
+                            <div class="register-moneda-container">
+                                <form [formGroup]="formMoneda" #frmMoneda="ngForm" (ngSubmit)="guardarMoneda()">
+                                    <mat-form-field class="mat-form-field-simbolo">
+                                        <mat-label>Símbolo</mat-label>
+                                        <input matInput minlength="3" required formControlName="simbolo">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="mat-form-field-moneda">
+                                        <mat-label>Moneda</mat-label>
+                                        <input matInput minlength="3" required formControlName="nombre">
+                                    </mat-form-field>
+                                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarMoneda()" class="mat-flat-button-moneda">Guardar</button>
+                                </form>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

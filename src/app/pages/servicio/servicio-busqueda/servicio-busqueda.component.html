@@ -1,0 +1,149 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <p class="buscar-label"><b>Buscar por:</b></p>
+        <mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+            <mat-radio-button value="1">Segmento</mat-radio-button>
+            <mat-radio-button value="2">Fecha</mat-radio-button>
+            <mat-radio-button value="3">Tipo de servicio</mat-radio-button>
+            <mat-radio-button value="4">Placa</mat-radio-button>
+        </mat-radio-group>
+        <mat-divider></mat-divider>
+        <form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscar()" style="margin-top: 20px;">
+            <mat-form-field appearance="fill" class="mat-form-field-segmento">
+                <mat-label>Segmento</mat-label>
+                <mat-select [(value)]="idSegmento" formControlName="segmento" required>
+                    <mat-option *ngFor="let s of (segmentos$ | async)" [value]="s.idSegmento">
+                        {{s.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                <mat-label>Inicio</mat-label>
+                <input matInput [matDatepicker]="pickerInicio" [max]="maxFecha"
+                    value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                <mat-label>Fin</mat-label>
+                <input matInput [matDatepicker]="pickerFin" [max]="maxFecha"
+                    value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+
+            <div>
+                <mat-form-field appearance="fill" class="mat-form-field-servicio-tipo">
+                    <mat-label>Tipo de servicio</mat-label>
+                    <mat-select [(value)]="idServicioTipo" formControlName="servicioTipo" required>
+                        <mat-option *ngFor="let st of (servicioTipos$ | async)" [value]="st.idServicioTipo">
+                            {{st.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill" class="mat-form-field-placa">
+                    <mat-label>Placa</mat-label>
+                    <mat-select [(value)]="idPlaca" formControlName="placa" required>
+                        <mat-option *ngFor="let p of (placas$ | async)" [value]="p.idPlaca">
+                            {{p.numero}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+        <section class="section-checkbox">
+            <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+                <mat-label>Sucursal</mat-label>
+                <mat-select [(ngModel)]="idSucursal" (selectionChange)="filtrarPorSucursal()">
+                    <mat-option value="0">TODOS</mat-option>
+                    <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                        {{s.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="porFinalizado" (change)="checkboxChange()">Finalizado</mat-checkbox>
+            <mat-checkbox [(ngModel)]="porFacturado" (change)="checkboxChange()">Facturado</mat-checkbox>
+            <button mat-flat-button color="primary" type="button" [disabled]="evaluarBotonBuscar()" (click)="buscar()">Buscar</button>
+        </section>
+        <mat-divider></mat-divider>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef='noServicio'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.correlativo}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef='fecha'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='servicioTipo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de servicio</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.servicioTipo}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef='placa'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Placa</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.placa}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='segmento'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Segmento</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.segmento}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='proximoServicio'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Proximo Servicio</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.proximoServicio}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='costoTrabajo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Trabajo</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.costoTrabajo}}</mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef='costoRepuesto'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Repuesto</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.costoRepuesto}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='costoTotal'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.costoTotal}}</mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='facturar'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Facturado</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon [ngClass]="{
+                            'hide-button' : !row.facturado,
+                            'show-button' : row.facturado
+                        }">receipt</mat-icon>
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef='finalizar'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Finalizar</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="basic" (click)="setFinalizar(row.noServicio)"
+                        [ngClass]="{
+                            'hide-button' : row.finalizado,
+                            'show-button' : !row.finalizado
+                        }">
+                            <mat-icon>check_circle_outline</mat-icon>
+                        </button>
+                    </mat-cell>
+                    <!--<mat-cell *matCellDef="let row">{{row.finalizado}}</mat-cell>-->
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

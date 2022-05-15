@@ -1,0 +1,62 @@
+<div>
+    <form [formGroup]="formCajaChica" #frmCajaChica="ngForm" (ngSubmit)="operar()">
+        
+        <mat-form-field>
+            <mat-label>Fecha de ingreso</mat-label>
+            <input matInput required formControlName="fechaIngreso">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Concepto</mat-label>
+            <input matInput required formControlName="concepto">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Autoriza</mat-label>
+            <mat-select [(value)]="idAutoriza" formControlName="autoriza" required>
+                <mat-option *ngFor="let p of (personal$ | async)" [value]="p.idPersonal">
+                    {{p.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Recibe</mat-label>
+            <mat-select [(value)]="idRecibe" formControlName="recibe" required>
+                <mat-option *ngFor="let p of (personal$ | async)" [value]="p.idPersonal">
+                    {{p.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Tipo de comprobante</mat-label>
+            <input matInput required formControlName="comprobanteTipo">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Código de factura y proveedor</mat-label>
+            <input matInput required formControlName="facturaCompra">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Número de comprobante</mat-label>
+            <input matInput required formControlName="numeroComprobante">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput required formControlName="descripcion"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-monto input-wrapper" appearance="outline">
+            <mat-label>Monto</mat-label>
+            <span class="input-currency">Q.</span>
+            <input matInput required formControlName="monto" type="number" min="0" step="0.01" required
+            (change)="setTwoNumberDecimal($event)">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmCajaChica.invalid" style="margin-right: 5px;">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>

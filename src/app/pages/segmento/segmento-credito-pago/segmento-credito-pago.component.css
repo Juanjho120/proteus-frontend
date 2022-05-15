@@ -1,0 +1,203 @@
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.asignacion-facturas-label {
+    font-size: 16px;
+}
+
+.mat-form-field-segmento {
+    margin-right: 20px;
+    width: 475px;
+}
+
+.mat-card-content-nit-busqueda {
+    margin-top: 40px;
+}
+
+.mat-card-content-segmento-credito {
+    margin: 10px;
+    display: none;
+}
+
+.mat-form-field-sucursal {
+    width: 200px;
+}
+
+.section-segmento {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.segmento-nit-container {
+    width: 35%;
+}
+
+.button-container {
+    width: 40%;
+}
+
+.segmento-credito-container {
+    width: 25%;
+    font-size: 35px;
+}
+
+.segmento-credito-detalle-container {
+    margin-top: 20px;
+    width: 100%;
+    max-height: 400px;
+}
+
+.segmento-pago-container {
+    margin-top: 40px;
+    max-height: 400px;
+    width: 100%;
+}
+
+.h1-nombre {
+    margin: 0px;
+}
+
+.h3-nit {
+    margin: 0px;
+}
+
+.mat-card {
+    width: 95%;
+}
+
+.mat-column-fechaEmision {
+    flex : 0 0 15%;
+    justify-content: center;
+}
+
+.mat-column-fecha {
+    flex : 0 0 10%;
+    justify-content: center;
+}
+
+.mat-column-servicioTipo {
+    flex : 0 0 12%;
+    justify-content: center;
+}
+
+.mat-column-facturaNumero {
+    justify-content: center;
+}
+
+.mat-column-servicio {
+    flex : 0 0 10%;
+    justify-content: center;
+}
+
+.mat-column-trabajo {
+    flex : 0 0 10%;
+    justify-content: flex-end;
+}
+
+.mat-column-repuesto {
+    flex : 0 0 10%;
+    justify-content: flex-end;
+}
+
+.mat-column-total {
+    flex : 0 0 10%;
+    justify-content: flex-end;
+}
+
+.mat-column-noServicio {
+    flex : 0 0 7%;
+    justify-content: center;
+}
+
+.mat-column-placa {
+    flex : 0 0 15%;
+    justify-content: center;
+}
+
+.mat-column-placaServicio {
+    flex : 0 0 10%;
+    justify-content: center;
+}
+
+.mat-column-facturar {
+    flex : 0 0 4%;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.mat-column-totalFacturado {
+    flex : 0 0 15%;
+    justify-content: flex-end;
+}
+
+.mat-column-totalPagado {
+    flex : 0 0 15%;
+    justify-content: flex-end;
+}
+
+.mat-column-totalRestante {
+    flex : 0 0 15%;
+    justify-content: flex-end;
+}
+
+.mat-column-fechaPago {
+    flex : 0 0 10%;
+    justify-content: center;
+}
+
+.mat-column-monto {
+    flex : 0 0 15%;
+    justify-content: flex-end;
+}
+
+.mat-column-pagoTipo {
+    flex : 0 0 15%;
+    justify-content: center;
+}
+
+.mat-column-acciones {
+    flex : 0 0 15%;
+    justify-content: center;
+}
+
+.mat-table {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.mat-table-segmento-pago {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-credito-detalle {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-servicios-container {
+    border-style: ridge;
+    border-width: 1px;
+    margin-bottom: 20px;
+}
+
+.mat-table-filter-pago {
+    margin-top: 5px;
+}
+
+.mat-form-field-filter-pago {
+    width: 100%;
+}
+
+.mat-table-filter-detalle {
+    margin-top: 5px;
+}
+
+.mat-form-field-filter-detalle {
+    width: 100%;
+}

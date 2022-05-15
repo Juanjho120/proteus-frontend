@@ -1,0 +1,48 @@
+.header-table-container {
+    margin: 0 5px 0 0;
+    min-height: 45px;
+    padding: 8px 0px 0;
+}
+
+.card-table-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-form-field {
+    width : 90%;
+    margin-right: 40px;
+}
+
+.mat-column-codigo {
+    flex : 0 0 6%;
+    justify-content: center;
+}
+
+.mat-column-nombre {
+    flex : 0 0 29%;
+}
+
+.mat-column-nit {
+    flex : 0 0 10%;
+}
+
+.mat-column-acciones {
+    flex : 0 0 11%;
+}
+
+.mat-table {
+    max-height: 450px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}

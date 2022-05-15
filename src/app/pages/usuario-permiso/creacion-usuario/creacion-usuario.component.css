@@ -1,0 +1,42 @@
+.container {
+    margin : 20px;
+    padding: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.card-perfil-container {
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.mat-card-usuario-imagen {
+    width: 25%;
+    height: 425px;
+}
+
+.mat-card-usuario-datos {
+    width: 65%;
+    height: 425px;
+}
+
+.center-image {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    height: 425px;
+    width: 350px;
+}
+
+.form-container {
+    width: 40%;
+}
+
+.mat-form-field-datos {
+    width: 100%;
+}
+
+.mat-form-field-password {
+    width: 47%;
+}

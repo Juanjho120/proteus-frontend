@@ -1,0 +1,12 @@
+.objeto-container {
+    text-align: center;
+    display: none;
+}
+
+.dialogo-container {
+    margin: 10px;
+}
+
+.eliminado-label-container {
+    text-align: center;
+}

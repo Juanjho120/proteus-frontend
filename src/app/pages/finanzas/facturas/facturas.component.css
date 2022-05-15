@@ -1,0 +1,118 @@
+.facturas-clientes-label {
+    font-size: 15px;
+}
+
+.facturas-proveedores-label {
+    font-size: 15px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-form-field-segmento {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.mat-form-field-proveedor {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-inicio {
+    width: 110px;
+    margin-right: 20px;
+}
+
+.mat-form-field-fecha-fin {
+    width: 110px;
+    margin-right: 20px;
+}
+
+.table-factura-segmento-container {
+    margin: 10px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.table-factura-proveedor-container {
+    margin: 10px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-factura-segmento {
+    max-height: 320px;
+    overflow: auto;
+}
+
+.mat-table-factura-proveedor {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.mat-column-facturaNumero {
+    flex: 0 0 11%;
+}
+
+.mat-column-fecha {
+    flex: 0 0 9%;
+    justify-content: center;
+}
+
+.mat-column-imprimir {
+    flex: 0 0 3%;
+    justify-content: center;
+}
+
+.mat-column-fechaPago {
+    flex: 0 0 10%;
+    justify-content: center;
+}
+
+.mat-column-tipoPago {
+    flex: 0 0 12%;
+    justify-content: center;
+}
+
+.mat-column-total {
+    flex: 0 0 8%;
+    justify-content: flex-end;
+}
+
+.mat-column-vencida {
+    flex: 0 0 8%;
+    justify-content: center;
+}
+
+.mat-column-pagada {
+    flex: 0 0 8%;
+    justify-content: center;
+}
+
+.mat-column-placa {
+    flex: 0 0 8%;
+    justify-content: center;
+}
+
+.mat-cell {
+    font-size: 12px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}

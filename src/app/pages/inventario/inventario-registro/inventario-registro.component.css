@@ -1,0 +1,83 @@
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 90px;
+    margin-bottom: 30px;
+}
+
+.mat-form-field-cantidad {
+    margin-right: 20px;
+    width: 10%;
+}
+
+.mat-form-field-razon {
+    width: 465px;
+}
+
+.mat-form-field-repuesto {
+    margin-right: 20px;
+    width: 50%;
+}
+
+.button-guardar-inventario {
+    margin-left: 50px;
+}
+
+.button-limpiar-inventario {
+    margin-left: 10px;
+}
+
+.mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 820px;
+    max-height: 250px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-table {
+    height: 175px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.mat-table-inventario-detalle {
+    border-style: ridge;
+    border-width: 1px;
+    width: 100%;
+}
+
+.mat-column-cantidad {
+    flex : 0 0 8%;
+    text-align: center;
+    justify-content: center;
+}
+
+.mat-column-codigo {
+    flex : 0 0 20%;
+}
+
+.mat-column-accion {
+    flex : 0 0 10%;
+    text-align: center;
+    justify-content: center;
+}
+
+.mat-header-row {
+    min-height: 30px;
+}
+
+.mat-row, .mat-footer-row {
+    min-height: 35px;
+}
+
+.mat-form-field-sucursal {
+    width: 30%;
+    margin-right: 20px;
+}

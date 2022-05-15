@@ -1,0 +1,164 @@
+.asignacion-facturas-label {
+    font-size: 16px;
+}
+
+.mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 900px;
+    max-height: 250px;
+    margin-bottom: 20px;
+}
+
+.mat-table {
+    height: 250px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}
+
+.mat-column-total {
+    flex : 0 0 110px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-column-acumulativo {
+    flex : 0 0 110px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-column-monto {
+    flex : 0 0 110px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-column-asignar {
+    flex : 0 0 70px;
+    justify-content: center;
+}
+
+.mat-column-fecha {
+    flex : 0 0 120px;
+    justify-content: center;
+}
+
+.mat-column-codigo {
+    flex : 0 0 160px;
+}
+
+.mat-form-field-proveedor {
+    width: 420px;
+    margin-right: 20px;
+}
+
+.busqueda-credito-proveedor-container {
+    margin-top: 40px;
+}
+
+.credito-proveedor-container {
+    margin: 10px;
+    display: none;
+}
+
+.h1-nombre {
+    margin: 0px;
+}
+
+.h3-nit {
+    margin: 0px;
+}
+
+.section-proveedor {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.proveedor-nit-nombre-container {
+    width: 35%;
+}
+
+.button-container {
+    width: 40%;
+}
+
+.proveedor-credito-container {
+    width: 25%;
+    font-size: 35px;
+}
+
+.mat-table-credito-detalle {
+    border-style: ridge;
+    border-width: 1px;
+    width: 1300px;
+}
+
+.proveedor-credito-detalle-container {
+    overflow: auto;
+}
+
+.mat-column-fechaFactura {
+    flex : 0 0 130px;
+    justify-content: center;
+}
+
+.mat-column-fechaPago {
+    flex : 0 0 130px;
+    justify-content: center;
+}
+
+.mat-column-observaciones {
+    flex : 0 0 375px;
+}
+
+.mat-column-estado {
+    flex : 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-notas {
+    flex : 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-accionesCD {
+    justify-content: center;
+}
+
+.mat-column-tipoDocumento {
+    justify-content: center;
+}
+
+.mat-column-noDocumento {
+    justify-content: center;
+}
+
+.mat-column-acciones {
+    flex : 0 0 160px;
+    justify-content: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.mat-table-pago-proveedor {
+    border-style: ridge;
+    border-width: 1px;
+    width: 1100px;
+}
+
+.pago-proveedor-container {
+    margin-top: 30px;
+}

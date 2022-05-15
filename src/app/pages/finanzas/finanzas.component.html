@@ -1,0 +1,41 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Finanzas</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Créditos y pagos">
+            <div class="finanzas-creditos-pagos-container" fxLayout="row" dynamicHeight>
+                <div class="finanzas-creditos-pagos-card-container" dynamicHeight>
+                    <app-finanzas-credito-pago></app-finanzas-credito-pago>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Caja chica">
+            <div class="caja-chica-container" dynamicHeight>
+                <div class="caja-chica-card-container" dynamicHeight>
+                    <app-caja-chica></app-caja-chica>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Cuentas bancarias">
+            <div class="cuentas-bancarias-container" dynamicHeight>
+                <div class="cuentas-bancarias-card-container" dynamicHeight>
+                    <app-cuenta-bancaria></app-cuenta-bancaria>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Cheques y boletas">
+            <div class="cheques-boletas-container" dynamicHeight>
+                <div class="cheques-boletas-card-container" dynamicHeight>
+                    <app-cheque-boleta></app-cheque-boleta>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Facturas">
+            <div class="facturas-container" dynamicHeight>
+                <div class="facturas-card-container" dynamicHeight>
+                    <app-facturas></app-facturas>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

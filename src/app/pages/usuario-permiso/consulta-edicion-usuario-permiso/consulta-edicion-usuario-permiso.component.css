@@ -1,0 +1,73 @@
+.mat-card {
+    width: 97%;
+    padding: 20px;
+}
+
+.mat-header-cell {
+    font-size: 13px;
+    background-color: blue;
+    color: white;
+    justify-content: center;
+}
+
+.mat-table {
+    overflow: auto;
+    max-height: 300px;
+}
+
+.mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.tables-container {
+    display: flex;
+}
+
+.mat-column-telefono {
+    flex: 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-estado {
+    flex: 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-acciones {
+    flex: 0 0 120px;
+    justify-content: center;
+}
+
+.mat-column-accionesP {
+    flex: 0 0 60px;
+    justify-content: center;
+}
+
+.mat-column-username {
+    flex: 0 0 160px;
+    justify-content: center;
+}
+
+.mat-column-rol {
+    flex: 0 0 200px;
+    justify-content: center;
+}
+
+.mat-column-nombre {
+    flex: 0 0 230px;
+}
+
+.mat-row-selected {
+    background-color: aqua;
+}
+
+.mat-row:hover {
+    cursor: pointer;
+}
+
+.mat-table-permisos-in {
+    width: 350px;
+    height: 300px;
+    overflow: auto;
+}

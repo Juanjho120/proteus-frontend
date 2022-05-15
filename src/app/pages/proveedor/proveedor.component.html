@@ -1,0 +1,87 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Proveedores</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Proveedores Mayores">
+            <div class="container-header">
+                <button mat-raised-button color="primary" (click)="abrirProveedorDialogo(null)" [disabled]="loaderService.isLoading.value">
+                    <span>Crear Proveedor</span>
+                </button>
+            </div>
+            <div class="card-proveedores-container" fxLayout="row" fxLayoutAlign="space-around start">
+                <mat-card dynamicHeight *ngFor="let p of proveedores">
+                    <mat-card-content>
+                        <div class="card-proveedor-container-container">
+                            <h3 class="h3-nombre-proveedor"><b>{{p.proveedor.nombre}}</b></h3>
+                            <h5 class="h5-direccion-proveedor">{{p.proveedor.direccionFiscal}}</h5>
+                            <h5 class="h5-telefono-proveedor"><b>Teléfono:</b> {{p.proveedor.telefono}}</h5>
+                            <h5 class="h5-telefono-proveedor"><b>Nit:</b> {{p.proveedor.nit}}</h5>
+                            <button mat-button color="basic" class="mat-button-agregar-asesor" (click)="abrirAsesorDialogo(null, p)" [disabled]="loaderService.isLoading.value">
+                                <mat-icon>person_add</mat-icon>
+                            </button>
+            
+                            <h4 class="h4-asesores">ASESORES:</h4>
+                            <div class="asesores-container">
+                                <mat-list>
+                                    <mat-list-item *ngFor="let pa of p.proveedorAsesor">
+                                        <mat-icon mat-list-icon>person</mat-icon>
+                                        <div mat-line>{{pa.nombre}}</div>
+                                        <div mat-line>{{pa.telefono}}</div>
+                                        <button mat-button color="primary" (click)="abrirAsesorDialogo(pa, null)" [disabled]="loaderService.isLoading.value">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-button color="warn" (click)="abrirAsesorDialogoEliminar(pa)" [disabled]="loaderService.isLoading.value">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                        </div>
+                        <button mat-raised-button color="primary" (click)="abrirProveedorDialogo(p.proveedor)" style="margin-right: 5px;" [disabled]="loaderService.isLoading.value">
+                            <span>Modificar</span>
+                        </button>
+                        <button mat-raised-button color="warn" (click)="abrirProveedorDialogoEliminar(p.proveedor)" [disabled]="loaderService.isLoading.value">
+                            <span>Eliminar</span>
+                        </button>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </mat-tab>
+        <mat-tab label="Proveedores Menores">
+            <div class="card-proveedores-menores-container">
+                <div class="table-proveedor-menor-container">
+                    <mat-table [dataSource]="dataSourceProveedorMenor">
+                        <ng-container matColumnDef='nombre'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='acciones'>
+                            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-button color="primary" (click)="abrirDialogoEdicionProveedorMenor(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>ballot</mat-icon>
+                                </button>
+                                <button mat-button color="warn" (click)="abrirDialogoEliminarProveedorMenor(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsProveedorMenor; sticky : true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsProveedorMenor;"></mat-row>
+                    </mat-table>
+                </div>
+                <div class="register-proveedor-menor-container">
+                    <form [formGroup]="formProveedorMenor" #frmProveedorMenor="ngForm" (ngSubmit)="crearProveedorMenor()">
+                        <mat-form-field class="mat-form-field-nombre-proveedor-menor" appearance="outline">
+                            <mat-label>Nombre del proveedor</mat-label>
+                            <input matInput required formControlName="nombre" style="text-transform:uppercase;">
+                        </mat-form-field>
+                        <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarProveedorMenor()">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    
+</div>

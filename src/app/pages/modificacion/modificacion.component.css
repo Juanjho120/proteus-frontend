@@ -1,0 +1,60 @@
+.container {
+    margin : 20px;
+    padding: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.mat-form-field-fecha-inicio {
+    margin-right: 25px;
+    width: 120px;
+}
+
+.mat-form-field-fecha-fin {
+    margin-right: 25px;
+    width: 120px;
+}
+
+.mat-form-field-usuario {
+    margin-right: 20px;
+    width: 220px;
+}
+
+.mat-table-creacion-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-actualizacion-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-eliminacion-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table {
+    overflow: auto;
+    height: 250px;
+}
+
+.mat-column-detalle {
+    flex: 0 0 77%;
+}
+
+.mat-column-fechaHora {
+    flex: 0 0 13%;
+}
+
+.mat-column-accion {
+    justify-content: center;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+}

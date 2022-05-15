@@ -1,0 +1,48 @@
+<div class="container" fxLayout="row" fxLayoutAlign="space-around start">
+    <div class="repuesto-nuevo-card-container mat-elevation-z8">
+        <mat-card class="repuesto-nuevo-card">
+            <mat-card-content>
+                <div style="display: flex">
+                    <div style="margin-right: 260px;">
+                        <h2>Formulario de ingreso</h2>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end start">
+                        <button mat-raised-button color="warn" class="button-cerrar" routerLink="/cardex" type="button">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <form [formGroup]="form" #frmRepuesto="ngForm" (ngSubmit)="operar()">
+                    <mat-form-field class="mat-form-field-codigo" appearance="outline">
+                        <mat-label>Código</mat-label>
+                        <input matInput required formControlName="codigo" style="text-transform:uppercase;">
+                    </mat-form-field>
+
+                    <mat-form-field class="mat-form-field-codigoBarra" appearance="outline">
+                        <mat-label>Código de barra</mat-label>
+                        <input matInput formControlName="codigoBarra" type="number" style="text-transform:uppercase;">
+                    </mat-form-field>
+            
+                    <mat-form-field class="mat-form-field-existencia" appearance="outline">
+                        <mat-label>Existencia</mat-label>
+                        <input matInput required formControlName="existencia" type="number">
+                    </mat-form-field>
+                    
+                    <mat-form-field class="mat-form-field-descripcion" appearance="outline">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput minLength="3" required formControlName="descripcion" style="text-transform:uppercase;">
+                    </mat-form-field>
+            
+                    <mat-form-field class="mat-form-field-precio input-wrapper" appearance="outline">
+                        <mat-label>Precio</mat-label>
+                        <span class="input-currency">Q.</span>
+                        <input matInput required formControlName="precio" type="number" min="0" required step="0.01" (change)="setTwoNumberDecimal($event)">
+                    </mat-form-field>
+
+                    <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonGuardarRepuesto()">Guardar</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

@@ -1,0 +1,6 @@
+<div>
+    <p>¿Eliminar la factura con código {{facturaCompraMenor.codigo}} del proveedor {{facturaCompraMenor.proveedorMenor.nombre}}?</p>
+</div>
+<button mat-raised-button color="primary" (click)="eliminar()">Eliminar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

@@ -1,0 +1,86 @@
+<mat-card dynamicHeight>
+    <mat-card-header>
+        <mat-card-title>Búsqueda de facturas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+        <mat-radio-group [(ngModel)]="idBusqueda" (change)="setInputs()">
+            <mat-radio-button value="1">Proveedor Menor</mat-radio-button>
+            <mat-radio-button value="2">Fecha</mat-radio-button>
+            <mat-radio-button value="3">Servicio</mat-radio-button>
+        </mat-radio-group>
+
+        <form [formGroup]="form" #frmFacturaCompra="ngForm" (ngSubmit)="buscar()">
+            <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                <mat-label>Proveedor Menor</mat-label>
+                <mat-select [(value)]="idProveedorMenor" formControlName="proveedorMenor" required>
+                    <mat-option *ngFor="let pm of (proveedoresMenores$ | async)" [value]="pm.idProveedorMenor">
+                        {{pm.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha-inicio" appearance="outline">
+                <mat-label>Inicio</mat-label>
+                <input matInput [matDatepicker]="pickerInicio" [max]="maxFecha"
+                    value="fechaInicioSeleccionada" (dateChange)="cambiarFechaInicio($event)" formControlName="fechaInicio">
+                <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="mat-form-field-fecha-fin" appearance="outline">
+                <mat-label>Fin</mat-label>
+                <input matInput [matDatepicker]="pickerFin" [max]="maxFecha"
+                    value="fechaFinSeleccionada" (dateChange)="cambiarFechaFin($event)" formControlName="fechaFin">
+                <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="mat-form-field-servicio">
+                <mat-label>Servicio</mat-label>
+                <mat-select [(value)]="idServicio" formControlName="servicio" required>
+                    <mat-option *ngFor="let s of (servicios$ | async)" [value]="s.idServicio">
+                        {{s.correlativo}} - {{s.placa.numero}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="frmFacturaCompra.invalid">Buscar</button>
+        </form>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <section class="section-panel">
+            <mat-expansion-panel *ngFor="let fc of facturasCompra">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        FACTURA {{fc.codigo}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{fc.fecha}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p class="p-factura"><b>Fecha: </b> {{fc.fecha}}</p>
+                <p class="p-factura"><b>Código: </b> {{fc.codigo}}</p>
+                <p class="p-factura"><b>Proveedor: </b> {{fc.proveedorMenor.nombre}}</p>
+                <p class="p-factura"><b>Total: </b> Q. {{fc.total.toFixed(2)}}</p>
+                <br>
+                <mat-grid-list cols=10 rowHeight = "30px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-header"><b>Cant</b></mat-grid-tile>
+                    <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-header"><b>Descripción</b></mat-grid-tile>
+                    <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Costo</b></mat-grid-tile>
+                </mat-grid-list>
+                <mat-grid-list cols="10" rowHeight = "50px" *ngFor="let fcd of fc.facturaCompraMenorDetalle">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content">{{fcd.cantidad}}</mat-grid-tile>
+                    <mat-grid-tile [colspan]="7" [rowspan]="1" class="mat-grid-tile-content">{{fcd.descripcion}}</mat-grid-tile>
+                    <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content">Q. {{fcd.costoCompra.toFixed(2)}}</mat-grid-tile>
+                </mat-grid-list>
+                <button mat-button color="accent" type="button" (click)="abrirFacturaCompraDialogoEliminar(fc)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-flat-button color="primary" type="button" (click)="enviarFacturaEdicion(fc)">Editar</button>
+            </mat-expansion-panel>
+        </section>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

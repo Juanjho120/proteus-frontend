@@ -1,0 +1,55 @@
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <div class="card-usuario-container" fxLayout="row" fxLayoutAlign="space-around start">
+            <mat-card dynamicHeight class="mat-card-usuario-imagen">
+                <mat-card-content>
+                    <div class="center-image">
+                        <img src="assets/addAccount.png" width="300px">
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card dynamicHeight class="mat-card-usuario-datos">
+                <mat-card-content>
+                    <div class="form-container">
+                        <form [formGroup]="formUsuario" #frmUsuario="ngForm" (ngSubmit)="crearUsuario()">
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Nombre" required formControlName="nombre">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Apellido" required formControlName="apellido">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Telefono" required formControlName="telefono">
+                            </mat-form-field>
+                    
+                            <mat-form-field class="mat-form-field-datos">
+                                <input matInput placeholder="Email" required formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mat-form-field-datos">
+                                <mat-label>Rol</mat-label>
+                                <mat-select [(value)]="idRol" formControlName="rol" required>
+                                    <mat-option *ngFor="let r of (roles$ | async)" [value]="r.idRol">
+                                        {{r.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="mat-form-field-password" style="margin-right: 6%;">
+                                <input matInput placeholder="Contraseña" required formControlName="password" type="password">
+                            </mat-form-field>
+
+                            <mat-form-field class="mat-form-field-password">
+                                <input matInput placeholder="Repetir Contraseña" required formControlName="passwordR" type="password">
+                            </mat-form-field>
+                            <button mat-raised-button [disabled]="evaluarCrearUsuarioBoton()" color="primary" type="submit" style="margin-right: 10px;">Crear usuario</button>
+                            <button mat-raised-button color="primary" type="button" (click)="limpiarFormUsuario()">Limpiar</button>
+                        </form>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>

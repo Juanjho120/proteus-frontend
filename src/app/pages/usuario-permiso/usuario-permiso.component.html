@@ -1,0 +1,26 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Usuarios y Permisos</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Consulta y edición">
+            <div class="consulta-edicion-container" fxLayout="row" dynamicHeight>
+                <div class="consulta-edicion-card-container" dynamicHeight>
+                    <app-consulta-edicion-usuario-permiso></app-consulta-edicion-usuario-permiso>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Creación de usuarios">
+            <div class="creacion-usuario-container" dynamicHeight>
+                <div class="creacion-usuario-card-container" dynamicHeight>
+                    <app-creacion-usuario></app-creacion-usuario>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Creación de roles">
+            <div class="creacion-rol-container" dynamicHeight>
+                <div class="creacion-rol-card-container" dynamicHeight>
+                    <app-creacion-rol></app-creacion-rol>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

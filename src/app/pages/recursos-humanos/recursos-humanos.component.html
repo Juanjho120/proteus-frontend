@@ -1,0 +1,83 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Recursos Humanos</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Ingreso y edición">
+            <div class="personal-container" fxLayout="row" dynamicHeight>
+                <div class="personal-ingreso-edicion-container" dynamicHeight>
+                    <div class="header-table-container">
+                        <mat-form-field color="warn" class="mat-form-field-header">
+                            <input matInput (keyup)="filter($event.target.value)" placeholder="Buscar personal" style="text-transform:uppercase;">
+                        </mat-form-field>
+                    </div>
+                    <div class="table-container">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef='nombre'>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef='telefono'>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.telefono}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef='puesto'>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.personalPuesto.nombre}}</mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef='acciones'>
+                                <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button mat-button color="primary" (click)="formularioEdicion(row)">
+                                        <mat-icon>ballot</mat-icon>
+                                    </button>
+                                    <button mat-button color="warn" (click)="abrirDialogoEliminar(row)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+                <div class="personal-card-container" dynamicHeight>
+                    <mat-card dynamicHeight>
+                        <h2>Formulario de edición</h2>
+                        <mat-card-content>
+                            <form [formGroup]="formPersonal" #frmPersonal="ngForm" (ngSubmit)="operar()">
+                                <mat-form-field>
+                                    <input matInput placeholder="Nombre" formControlName="nombre" required style="text-transform:uppercase;">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Teléfono" formControlName="telefono" style="text-transform:uppercase;">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Puesto</mat-label>
+                                    <mat-select [(value)]="idPersonalPuesto" formControlName="puesto" required>
+                                        <mat-option *ngFor="let pp of (personalPuestos$ | async)" [value]="pp.idPersonalPuesto">
+                                            {{pp.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <button mat-flat-button color="primary" type="submit" [disabled]="frmPersonal.invalid">Guardar</button>
+                                <button mat-flat-button color="primary" type="button" (click)="nuevoPersonal()" style="margin-left: 10px;">Nuevo</button>
+                            </form>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Outsourcing">
+            <div class="outsourcing-container" fxLayout="row" dynamicHeight>
+                <div class="outsourcing-card-container" dynamicHeight>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

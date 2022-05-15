@@ -1,0 +1,12 @@
+<div>
+    <mat-form-field appearance="outline">
+        <mat-label>Símbolo</mat-label>
+        <input matInput [(ngModel)]="moneda.simbolo">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="moneda.nombre">
+    </mat-form-field>
+</div>
+<button mat-raised-button color="primary" (click)="editar()" style="margin-right: 5px;">Editar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>

@@ -1,0 +1,103 @@
+.mat-column-fecha {
+    flex : 0 0 30%;
+    justify-content: center;
+}
+
+.mat-column-codigo {
+    flex : 0 0 25%;
+    justify-content: center;
+}
+
+.mat-column-total {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.mat-table-facturasPorPagar-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 540px;
+    max-height: 125px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-table-facturasAPagar-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 540px;
+    max-height: 125px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.mat-form-field-pagoTipo {
+    width: 300px;
+}
+
+.mat-form-field-observaciones {
+    display: inline;
+}
+
+.mat-form-field-cuentaBancaria {
+    width: 98%;
+}
+
+.mat-form-field-numero {
+    width: 325px;
+    margin-right: 10px;
+}
+
+.mat-form-field-monto {
+    text-align: right;
+    width: 200px;
+}
+
+.mat-form-field-fechaEmision {
+    width: 200px;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.form-pago-container {
+    margin-top: 20px;
+}
+
+.mat-header-row, .mat-row {
+    min-height: 30px;
+}
+
+.container {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

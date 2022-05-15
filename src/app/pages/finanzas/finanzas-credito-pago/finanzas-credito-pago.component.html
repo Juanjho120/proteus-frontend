@@ -1,0 +1,195 @@
+<mat-form-field appearance="fill" class="mat-form-field-sucursal">
+    <mat-label>Sucursal</mat-label>
+    <mat-select [(ngModel)]="idSucursal" (selectionChange)="filtrarPorSucursal()">
+        <mat-option value="0">TODOS</mat-option>
+        <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+            {{s.nombre}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-card dynamicHeight>
+    <mat-card-content>
+        <p class="asignacion-facturas-label"><b>Asignación de Facturas</b></p>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourceFactura">
+                <ng-container matColumnDef='codigo'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Código de Factura</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.codigo}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='fecha'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.fecha}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='proveedor'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Proveedor</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.proveedor.nombre}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='total'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row">Q. {{row.total.toFixed(2)}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef='asignar'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asignar</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button mat-button color="primary" (click)="asignarFactura(row)" [disabled]="loaderService.isLoading.value">
+                            <mat-icon>payment</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsFactura; sticky : true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsFactura;"></mat-row>
+            </mat-table>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="busqueda-credito-proveedor-container">
+            <form [formGroup]="formBusqueda" #frmBusqueda="ngForm" (ngSubmit)="buscarCreditoProveedor()">
+                <mat-form-field appearance="fill" class="mat-form-field-proveedor">
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select [(value)]="idProveedor" formControlName="proveedor" required>
+                        <mat-option *ngFor="let p of (proveedores$ | async)" [value]="p.idProveedor">
+                            {{p.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <button mat-flat-button color="primary" type="submit" [disabled]="evaluarBotonBuscar()">Ver Historial</button>
+            </form>
+        </div>
+        <div class="credito-proveedor-container" id="div-credito-proveedor">
+            <section class="section-proveedor">
+                <div class="proveedor-nit-nombre-container">
+                    <h1 class="h1-nombre">{{creditoProveedor.proveedor.nombre}}</h1>
+                    <h3 class="h3-nit">{{creditoProveedor.proveedor.nit}}</h3>
+                </div>
+                <div class="button-container">
+                    <button mat-button color="primary" (click)="abrirDialogoPagoProveedor()" [disabled]="loaderService.isLoading.value || idSucursal == 0">
+                        <mat-icon>monetization_on</mat-icon>
+                    </button>
+                </div>
+                <div class="proveedor-credito-container">
+                    Q. {{creditoProveedorTotal.toFixed(2)}}
+                </div>
+            </section>
+            <br />
+            <b>Detalle de créditos</b>
+            <div class="proveedor-credito-detalle-container">
+                <div class="mat-table-credito-detalle">
+                    <mat-table [dataSource]="dataSourceCreditoDetalle">
+                        <ng-container matColumnDef='codigo'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Código de Factura</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.facturaCompra.codigo}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='fechaFactura'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Factura</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.facturaCompra.fecha}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='observaciones'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Observaciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.observaciones}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='total'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                            <mat-cell *matCellDef="let row">Q. {{row.totalRestante.toFixed(2)}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='acumulativo'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Acumulativo</mat-header-cell>
+                            <mat-cell *matCellDef="let row">Q. {{row.acumulativo.toFixed(2)}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='estado'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-icon>{{row.icon}}</mat-icon>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='notas'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Nota de Crédito</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-button color="primary" (click)="abrirNotaCreditoAdjuntoDialogo(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>content_copy</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='accionesCD'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Acciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-button color="primary" (click)="abrirCreditoProveedorDetalleEdicion(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-button color="primary" (click)="abrirNotaCreditoDialogo(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>note</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsCreditoDetalle; sticky : true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsCreditoDetalle;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+            <button mat-button color="primary" type="button" [disabled]="verBotonReporteCredito()" (click)="crearReporteCreditoProveedorPorProveedorSinPagar(creditoProveedor.proveedor)">
+                <mat-icon>print</mat-icon>
+            </button>
+            <div class="pago-proveedor-container">
+                <b>Pagos realizados</b>
+                <div class="mat-table-pago-proveedor">
+                    <mat-table [dataSource]="dataSourcePagoProveedor">
+                        <ng-container matColumnDef='tipoDocumento'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Documento</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.tipoDocumento}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='noDocumento'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>No Documento</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.noDocumento}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='fechaPago'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Pago</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.fechaPago}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='observaciones'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Observaciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.observaciones}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='monto'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Monto</mat-header-cell>
+                            <mat-cell *matCellDef="let row">Q. {{row.monto.toFixed(2)}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='acciones'>
+                            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-button color="primary" (click)="abrirDialogoPagoProveedorDetalle(row.idPagoProveedor)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>content_copy</mat-icon>
+                                </button>
+                                <!--<button mat-button color="warn" (click)="abrirDialogoPagoProveedorEliminar(row)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>-->
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumnsPagoProveedor; sticky : true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsPagoProveedor;"></mat-row>
+                    </mat-table>
+                </div>
+                <button mat-button color="primary" type="button" [disabled]="verBotonReportePago()" (click)="crearReportePagoProveedorDetalle(creditoProveedor)">
+                    <mat-icon>print</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

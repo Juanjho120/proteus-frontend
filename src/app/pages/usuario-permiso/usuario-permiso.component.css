@@ -1,0 +1,30 @@
+.container {
+    margin: 20px;
+    border-style: ridge;
+    border-width: 1px;
+    background-color: white;
+}
+
+.consulta-edicion-container {
+    margin: 20px;
+}
+
+.consulta-edicion-card-container {
+    width: 100%;
+}
+
+.creacion-usuario-container {
+    margin: 20px;
+}
+
+.creacion-usuario-card-container {
+    width: 100%;
+}
+
+.creacion-rol-container {
+    margin: 20px;
+}
+
+.creacion-rol-card-container {
+    width: 100%;
+}

@@ -1,0 +1,214 @@
+.ingreso-label {
+    font-size: 16px;
+}
+
+.busqueda-label {
+    font-size: 16px;
+}
+
+.mat-form-field-categoria {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-entidad {
+    width: 310px;
+    margin-right: 20px;
+}
+
+.mat-flat-button {
+    width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mat-form-field-noCuenta {
+    width: 210px;
+    margin-right: 20px;
+}
+
+.mat-form-field-nombreCuenta {
+    width: 330px;
+    margin-right: 20px;
+}
+
+.mat-form-field-banco {
+    width: 180px;
+    margin-right: 20px;
+}
+
+.mat-form-field-proveedor {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-segmento {
+    width: 310px;
+    margin-right: 20px;
+}
+
+.mat-form-field-personal {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-cuentaBancariaTipo {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mat-form-field-moneda {
+    width: 150px;
+}
+
+.mat-form-field-nombre {
+    width: 330px;
+    margin-right: 20px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.cuenta-bancaria-busqueda-container {
+    margin-top: 20px;
+}
+
+.cuenta-bancaria-table-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 100%;
+    height: 325px;
+    overflow: auto;
+    margin-bottom: 30px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-column-tipoCuenta {
+    flex: 0 0 150px;
+}
+
+.mat-column-noCuenta {
+    flex: 0 0 180px;
+}
+
+.mat-column-moneda {
+    flex: 0 0 80px;
+}
+
+.mat-column-banco {
+    flex: 0 0 200px;
+}
+
+.mat-column-acciones {
+    flex: 0 0 100px;
+}
+
+.cuenta-bancaria-soporte-container {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.cuenta-bancaria-cards-container {
+    justify-content: center;
+    display: flex;
+}
+
+.banco-container {
+    width: 385px;
+    height: 515px;
+    border-style: ridge;
+    border-width: 1px;
+    margin: 10px;
+}
+
+.cuenta-bancaria-tipo-container {
+    width: 385px;
+    height: 515px;
+    border-style: ridge;
+    border-width: 1px;
+    margin: 10px;
+}
+
+.moneda-container {
+    width: 415px;
+    height: 515px;
+    border-style: ridge;
+    border-width: 1px;
+    margin: 10px;
+}
+
+.mat-table-bancos-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-bancos {
+    max-height: 350px;
+    overflow: auto;
+}
+
+.mat-table-cuenta-bancaria-tipos-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-cuenta-bancaria-tipos {
+    height: 350px;
+    overflow: auto;
+}
+
+.mat-table-monedas-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table-monedas {
+    height: 350px;
+    overflow: auto;
+}
+
+.register-banco-container {
+    margin-top: 40px;
+}
+
+.mat-flat-button-banco {
+    margin-left: 20px;
+}
+
+.register-cuenta-bancaria-tipo-container {
+    margin-top: 40px;
+}
+
+.mat-flat-button-cuenta-bancaria-tipo {
+    margin-left: 20px;
+}
+
+.register-moneda-container {
+    margin-top: 40px;
+}
+
+.mat-flat-button-moneda {
+    margin-left: 20px;
+}
+
+.mat-column-simbolo {
+    flex: 0 0 75px;
+}
+
+.mat-form-field-simbolo {
+    width: 75px;
+    margin-right: 10px;
+}
+
+.mat-form-field-moneda {
+    width: 125px;
+}

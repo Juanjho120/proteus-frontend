@@ -1,0 +1,33 @@
+<div class="container">
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef='nombre'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef='acciones'>
+            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button mat-button color="primary" (click)="abrirDialogoEdicion(row)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button color="warn" (click)="abrirDialogoEliminar(row)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+<div class="register-container">
+    <form [formGroup]="form" #frmPersonalPuesto="ngForm" (ngSubmit)="guardar()">
+        <mat-form-field>
+            <mat-label>Puesto de personal</mat-label>
+            <input matInput minlength="3" required formControlName="nombre" style="text-transform:uppercase;">
+            <small *ngIf="f().nombre.errors?.minlength && f().nombre.touched" class="invalido">El campo debe ser mayor a 3 caracteres</small>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmPersonalPuesto.invalid">Guardar</button>
+    </form>
+</div>

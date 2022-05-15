@@ -1,0 +1,26 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Servicios</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Ingreso y edición">
+            <div class="servicio-ingreso-edicion-container" fxLayout="row" dynamicHeight>
+                <div class="servicio-ingreso-edicion-card-container" dynamicHeight>
+                    <app-servicio-ingreso-edicion></app-servicio-ingreso-edicion>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Búsqueda">
+            <div class="servicio-busqueda-container" dynamicHeight>
+                <div class="servicio-busqueda-card-container" dynamicHeight>
+                    <app-servicio-busqueda></app-servicio-busqueda>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Resumen general">
+            <div class="servicio-resumen-container" dynamicHeight>
+                <div class="servicio-resumen-card-container" dynamicHeight>
+                    <app-servicio-resumen></app-servicio-resumen>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

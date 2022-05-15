@@ -1,0 +1,30 @@
+.container {
+    min-height: 300px;
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-table {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.mat-header-cell {
+    font-size: 15px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.register-container {
+    margin-top: 40px;
+    min-height: 200px;
+}
+
+.mat-flat-button {
+    margin-left: 50px;
+}
+
+.invalido {
+    color : red;
+}

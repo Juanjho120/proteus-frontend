@@ -1,0 +1,79 @@
+<router-outlet></router-outlet>
+<div class="container" fxLayout="row" fxLayoutAlign="space-around start">
+    <div class="repuestos-tabla-card-container mat-elevation-z8">
+        <mat-card class="repuestos-tabla-card">
+            <mat-card-header>
+                <mat-card-title>Cardex de Repuestos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-form-field appearance="fill" class="mat-form-field-sucursal">
+                    <mat-label>Sucursal</mat-label>
+                    <mat-select [(ngModel)]="idSucursal" (selectionChange)="filtrarPorSucursal()">
+                        <mat-option value="0">TODOS</mat-option>
+                        <mat-option *ngFor="let s of (sucursales$ | async)" [value]="s.idSucursal">
+                            {{s.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="header-table-container">
+                    <mat-form-field color="warn" appearance="outline">
+                        <mat-label>Buscar repuesto</mat-label>
+                        <input matInput (keyup)="filter($event.target.value)" style="text-transform:uppercase;">
+                    </mat-form-field>
+                    <button mat-button color="primary" type="button" (click)="imprimirCardex()" [disabled]="loaderService.isLoading.value">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                    <button mat-button color="primary" type="button" (click)="cuadrarInventariosRepuestos()" [disabled]="loaderService.isLoading.value">
+                        <mat-icon>auto_fix_high</mat-icon>
+                    </button>
+                </div>
+                <div class="card-table-container">
+                    <mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef='codigo'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Codigo</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.codigo}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef='descripcion'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.descripcion}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef='existencia'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Existencia</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.existencia}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef='precio'>
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+                            <mat-cell *matCellDef="let row" style="margin-right: 30px;">Q. {{row.precio.toFixed(2)}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef='acciones'>
+                            <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-button color="primary" (click)="crearCardexIndividual(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>print</mat-icon>
+                                </button>
+                                <button mat-button color="primary" (click)="abrirDialogoEdicion(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>ballot</mat-icon>
+                                </button>
+                                <button mat-button color="warn" (click)="abrirDialogoEliminar(row)" [disabled]="loaderService.isLoading.value">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+    
+                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <button mat-fab color="primary" style="float: left; margin: 5px" [routerLink]="linkNuevo" [disabled]="loaderService.isLoading.value || idSucursal == 0">
+                        <mat-icon>create</mat-icon>
+                    </button>
+                    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5,10,25,100]"></mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

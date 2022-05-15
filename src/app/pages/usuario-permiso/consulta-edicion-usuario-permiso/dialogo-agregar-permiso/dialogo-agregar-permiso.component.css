@@ -1,0 +1,34 @@
+.dialog-container {
+    justify-content: center;
+    text-align: center;
+}
+
+.mat-table-permisos-in {
+    width: 270px;
+    height: 300px;
+    overflow: auto;
+}
+
+.mat-table-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.tables-container {
+    display: flex;
+}
+
+.mat-header-cell {
+    font-size: 13px;
+    background-color: blue;
+    color: white;
+    justify-content: center;
+}
+
+.mat-row-selected {
+    background-color: aqua;
+}
+
+.mat-row:hover {
+    cursor: pointer;
+}

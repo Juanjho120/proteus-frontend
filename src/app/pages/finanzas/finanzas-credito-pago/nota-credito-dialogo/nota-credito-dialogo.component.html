@@ -1,0 +1,38 @@
+<div>
+    <div style="text-align: center;">
+        <p><b>NOTA DE CRÉDITO</b></p>
+    </div>
+    <form [formGroup]="formNotaCredito" #frmNotaCredito="ngForm" (ngSubmit)="crearNotaCredito()">
+        <mat-form-field class="mat-form-field-facturaCodigo" appearance="outline">
+            <mat-label>Código de factura</mat-label>
+            <input matInput formControlName="facturaCodigo">
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-codigo" appearance="outline">
+            <mat-label>Código nota de crédito</mat-label>
+            <input matInput formControlName="codigo" style="text-transform:uppercase;" required>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-monto input-wrapper" appearance="outline">
+            <mat-label>Monto</mat-label>
+            <span class="input-currency">Q.</span>
+            <input matInput formControlName="monto" type="number" type="number" min="0" required step="0.01" (change)="setTwoNumberDecimal($event)">
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-descripcion" appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion" style="text-transform:uppercase;" required></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-fechaAplicacion" appearance="outline">
+            <mat-label>Fecha de aplicación</mat-label>
+            <input matInput [matDatepicker]="pickerFechaAplicacion" [max]="maxFecha"
+                value="fechaAplicacionSeleccionada" (dateChange)="cambiarFechaAplicacion($event)" formControlName="fechaAplicacion" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaAplicacion"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaAplicacion></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmNotaCredito.invalid" style="margin-right: 5px;">Crear</button>
+        <button mat-flat-button color="warn" type="button" (click)="cerrar()">Cancelar</button>
+    </form>
+</div>

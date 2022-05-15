@@ -1,0 +1,25 @@
+<div class="container mat-elevation-z8">
+    <h1 style="margin: 15px;">Facturas de Compra</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Facturas de repuesto">
+            <div class="factura-compra-container">
+                <div class="factura-compra-ingreso-container" dynamicHeight>
+                    <app-factura-compra-ingreso></app-factura-compra-ingreso>
+                </div>
+                <div class="factura-compra-busqueda-container" dynamicHeight>
+                    <app-factura-compra-busqueda></app-factura-compra-busqueda>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Facturas varias">
+            <div class="factura-compra-container">
+                <div class="factura-compra-ingreso-container" dynamicHeight>
+                    <app-factura-compra-menor-ingreso></app-factura-compra-menor-ingreso>
+                </div>
+                <div class="factura-compra-busqueda-container" dynamicHeight>
+                    <app-factura-compra-menor-busqueda></app-factura-compra-menor-busqueda>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

@@ -1,0 +1,61 @@
+<div class="checklist-container">
+    <p class="title-checklist"><b>CHECKLIST {{checklist.idChecklist}}</b></p>
+    
+    <mat-grid-list cols="8" rowHeight = "17px">
+        <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-content"><b>Tipo de servicio:</b>&nbsp;{{checklist.servicio.servicioTipo.nombre}}</mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Fecha de revisión:</b>&nbsp;{{checklist.fechaRevision}}</mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="8" rowHeight = "17px">
+        <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-content"><b>Tipo de checklist:</b>&nbsp;{{checklist.checklistServicioTipo.nombre}}</mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Supervisor:</b>&nbsp;{{checklist.supervisor.nombre}}</mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="8" rowHeight = "17px">
+        <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-content"><b>Número de placa:</b>&nbsp;{{checklist.servicio.placa.numero}}</mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Supervisor:</b>&nbsp;{{checklist.supervisor.nombre}}</mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="8" rowHeight = "17px">
+        <mat-grid-tile [colspan]="5" [rowspan]="1" class="mat-grid-tile-content"><b>Observaciones:</b>&nbsp;<div style="font-size: 11px;">{{checklist.observaciones}}</div></mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-grid-tile-content"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-content"><b>Mecánico:</b>&nbsp;{{checklist.mecanico.nombre}}</mat-grid-tile>
+    </mat-grid-list><br>
+    <mat-divider></mat-divider>
+    <div class="detalle-checklist">
+        <div class="detalle-mecanico-checklist">
+            <p class="detalle-title-checklist"><b>SISTEMA MECÁNICO</b></p>
+            <mat-grid-list cols="11" rowHeight = "20px">
+                <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-header"><b>Item</b></mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Evaluación</b></mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="11" rowHeight = "20px" *ngFor="let cdm of checklistDetalleMecanico">
+                <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-content-detalle">{{cdm.checklistItem.nombre}}</mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-evaluacion"
+                    [ngClass]="{
+                        'lightgreen' : cdm.checklistEvaluacion.idChecklistEvaluacion == 1,
+                        'lightcoral' : cdm.checklistEvaluacion.idChecklistEvaluacion == 2,
+                        'lightgray' : cdm.checklistEvaluacion.idChecklistEvaluacion == 3
+                    }">{{cdm.checklistEvaluacion.nombre}}</mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div class="detalle-electrico-checklist">
+            <p class="detalle-title-checklist"><b>SISTEMA ELÉCTRICO</b></p>
+            <mat-grid-list cols="11" rowHeight = "20px">
+                <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-header"><b>Item</b></mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-header"><b>Evaluación</b></mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="11" rowHeight = "20px" *ngFor="let cde of checklistDetalleElectrico">
+                <mat-grid-tile [colspan]="9" [rowspan]="1" class="mat-grid-tile-content-detalle">{{cde.checklistItem.nombre}}</mat-grid-tile>
+                <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-grid-tile-evaluacion"
+                    [ngClass]="{
+                        'lightgreen' : cde.checklistEvaluacion.idChecklistEvaluacion == 1,
+                        'lightcoral' : cde.checklistEvaluacion.idChecklistEvaluacion == 2,
+                        'lightgray' : cde.checklistEvaluacion.idChecklistEvaluacion == 3
+                    }">{{cde.checklistEvaluacion.nombre}}</mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+    
+    
+</div>

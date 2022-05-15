@@ -1,0 +1,41 @@
+<div>
+    <form [formGroup]="form" #frmRepuesto="ngForm" (ngSubmit)="operar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput required formControlName="codigo">
+            <small *ngIf="f().codigo.errors?.required && f().codigo.touched" class="invalido">Codigo es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Código de barra</mat-label>
+            <input matInput formControlName="codigoBarra" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput minLength="3" required formControlName="descripcion"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="5"></textarea>
+            <small *ngIf="f().descripcion.errors?.required && f().descripcion.touched" class="invalido">Descripcion es requerido</small>
+            <small *ngIf="f().descripcion.errors?.minlength && f().descripcion.touched" class="invalido">El campo debe ser mayor a 3 caracteres</small>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Existencia</mat-label>
+            <input matInput required formControlName="existencia" type="number">
+            <small *ngIf="f().existencia.errors?.required && f().existencia.touched" class="invalido">Existencia es requerido</small>
+        </mat-form-field>
+
+        <mat-form-field class="mat-form-field-precio input-wrapper" appearance="outline">
+            <mat-label>Precio</mat-label>
+            <span class="input-currency">Q.</span>
+            <input matInput required formControlName="precio" type="number" min="0" required step="0.01" (change)="setTwoNumberDecimal($event)">
+            <small *ngIf="f().precio.errors?.required && f().precio.touched" class="invalido">Precio es requerido</small>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="frmRepuesto.invalid" style="margin-right: 5px;">Guardar</button>
+        <button mat-raised-button color="warn" (click)="cerrar()" type="button">Cancelar</button>
+    </form>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "line-scale-party" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>

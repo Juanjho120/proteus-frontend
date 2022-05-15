@@ -1,0 +1,60 @@
+.repuestos-tabla-card-container {
+    width : 1100px;
+}
+
+.container {
+    margin: 30px;
+}
+
+.repuestos-tabla-card {
+    height: 595px;
+}
+
+.mat-column-codigo {
+    flex : 0 0 100px;
+}
+
+.mat-column-existencia {
+    flex : 0 0 100px;
+    justify-content: center;
+}
+
+.mat-column-precio {
+    flex : 0 0 100px;
+    justify-content: flex-end;
+}
+
+.mat-column-acciones {
+    flex : 0 0 200px;
+}
+
+.card-table-container {
+    border-style: ridge;
+    border-width: 1px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+    justify-content: left!important;
+}
+
+.mat-table {
+    max-height: 345px;
+    overflow: auto;
+}
+
+.header-table-container {
+    min-height: 45px;
+    padding: 0px 5px 0;
+    display: flex;
+}
+
+.mat-form-field {
+    width : 90%;
+}
+
+.mat-form-field-sucursal {
+    width: 30%;
+}

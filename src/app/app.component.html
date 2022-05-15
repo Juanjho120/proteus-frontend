@@ -1,0 +1,124 @@
+<div class="example-container">
+  <mat-toolbar color="primary" class="example-toolbar" *ngIf="loginService.estaLogueado()">
+
+      <h1 class="example-app-name" style="font-size: 40px;">PROTEUS</h1>
+
+      <span class="example-spacer"></span>
+
+      <h3>{{username}}</h3>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/perfil">
+              <mat-icon>account_box</mat-icon>
+              <span>Mi Perfil</span>
+          </button>
+          <button mat-menu-item (click)="sidenav.opened = opened"  (click)="loginService.cerrarSesion()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Cerrar Sesión</span>
+          </button>
+      </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+      <mat-sidenav #sidenav style="width: 250px" mode="side" [(opened)]="opened">
+          <img src="assets/corporacionDiaz.jpg" width="170" style="margin-left: 30px; margin-top: 10px">
+    
+          <div *ngFor="let v of ventanas">
+            <button mat-menu-item routerLink="{{v.url}}" style="cursor: pointer">
+                <mat-icon>{{v.icono}}</mat-icon>
+                <span>{{v.nombre}}</span>
+            </button>
+            <mat-divider></mat-divider>
+          </div>
+
+          <!--<button mat-menu-item routerLink="/inicio" style="cursor: pointer">
+              <mat-icon>home</mat-icon>
+              <span>Inicio</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/servicio" style="cursor: pointer">
+              <mat-icon>construction</mat-icon>
+              <span>Servicios</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/cotizacion" style="cursor: pointer">
+              <mat-icon>content_paste</mat-icon>
+              <span>Cotizaciones</span>
+          </button>
+          <mat-divider></mat-divider>            
+          <button mat-menu-item routerLink="/checklist" style="cursor: pointer">
+              <mat-icon>fact_check</mat-icon>
+              <span>Checklists</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/inventario" style="cursor: pointer">
+              <mat-icon>book_online</mat-icon>
+              <span>Inventarios</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/segmento" style="cursor: pointer">
+              <mat-icon>domain</mat-icon>
+              <span>Segmentos</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/proveedor" style="cursor: pointer">
+              <mat-icon>store</mat-icon>
+              <span>Proveedores</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/placa" style="cursor: pointer">
+              <mat-icon>local_shipping</mat-icon>
+              <span>Placas</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/cardex" style="cursor: pointer">
+              <mat-icon>list</mat-icon>
+              <span>Cardex</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/finanzas" style="cursor: pointer">
+            <mat-icon>account_balance</mat-icon>
+            <span>Finanzas</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/factura-compra" style="cursor: pointer">
+            <mat-icon>shopping_cart</mat-icon>
+            <span>Facturas de Compra</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/recurso-humano" style="cursor: pointer">
+            <mat-icon>how_to_reg</mat-icon>
+            <span>Recursos Humanos</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/modificacion" style="cursor: pointer">
+            <mat-icon>sd_card</mat-icon>
+            <span>Modificaciones</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/usuario-permiso" style="cursor: pointer">
+            <mat-icon>supervised_user_circle</mat-icon>
+            <span>Usuarios y Permisos</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/soporte" style="cursor: pointer">
+            <mat-icon>settings</mat-icon>
+            <span>Soporte</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/reporte" style="cursor: pointer">
+            <mat-icon>search</mat-icon>
+            <span>Reportes</span>
+          </button>-->
+      </mat-sidenav>
+      
+      <mat-sidenav-content class="back-container">
+          <router-outlet></router-outlet>
+      </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</div>

@@ -1,0 +1,131 @@
+.title-container {
+    text-align: center;
+}
+
+.form-pago-container {
+    margin-top: 20px;
+}
+
+.mat-form-field-pagoTipo {
+    width: 330px;
+    margin-right: 10px;
+}
+
+.mat-table-facturasPorPagar-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 540px;
+    max-height: 125px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-table-facturasAPagar-container {
+    border-style: ridge;
+    border-width: 1px;
+    width: 540px;
+    max-height: 125px;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.form-cheque-container {
+    display: none;
+}
+
+.form-transaccion-container {
+    display: none;
+}
+
+.mat-column-factura {
+    justify-content: center;
+}
+
+.mat-column-fecha {
+    flex : 0 0 20%;
+    justify-content: center;
+}
+
+.mat-column-servicio {
+    flex : 0 0 20%;
+    justify-content: center;
+}
+
+.mat-column-total {
+    flex : 0 0 25%;
+    justify-content: flex-end;
+}
+
+.mat-form-field-cuentaBancaria {
+    width: 540px;
+}
+
+.mat-form-field-referencia {
+    width: 330px;
+    margin-right: 10px;
+}
+
+.mat-form-field-monto {
+    width: 200px;
+    text-align: right;
+}
+
+.mat-form-field-fechaEmision {
+    width: 265px;
+}
+
+.mat-form-field-transaccionEstado {
+    width: 540px;
+}
+
+.mat-form-field-fechaProcesamiento {
+    width: 265px;
+    margin-right: 10px;
+}
+
+.mat-form-field-fechaAprobacion {
+    width: 265px;
+}
+
+.mat-header-row, .mat-row {
+    min-height: 30px;
+}
+
+.container {
+    max-height: 500px;
+    overflow: auto;
+}
+
+.mat-form-field-numero {
+    width: 330px;
+    margin-right: 10px;
+}
+
+
+.input-wrapper {
+    position: relative;
+  }
+.input-currency {
+    position: absolute;
+    left: 10px;
+    top: calc(100% - 2.15em);
+    line-height: 1em;
+    font-size: 1em;
+}
+
+.input-wrapper > input {
+    padding-left: 16px;
+    font-size: 1em;
+}

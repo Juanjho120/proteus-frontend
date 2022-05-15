@@ -1,0 +1,42 @@
+<div class="dialog-container">
+    <h3><b>Agregar permisos para el usuario {{usuarioDto.nombre}} {{usuarioDto.apellido}}</b></h3>
+    <div class="tables-container" fxLayoutAlign="space-around start">
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourceVentanasDefault" class="mat-table-permisos-in">
+                <ng-container matColumnDef='nombreP'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Ventanas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.ventana}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                <mat-row (click)="seleccionarVentana(row)" *matRowDef="let row; columns: displayedColumnsNombre;"
+                [ngClass]="{'mat-row-selected' : idVentanaDefaultSeleccionado == row.idVentana}"></mat-row>
+            </mat-table>
+        </div>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourceTablasDefault" class="mat-table-permisos-in">
+                <ng-container matColumnDef='nombreP'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tablas</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.tabla}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                <mat-row (click)="seleccionarTabla(row)" *matRowDef="let row; columns: displayedColumnsNombre;"
+                [ngClass]="{'mat-row-selected' : idTablaDefaultSeleccionado == row.idTabla}"></mat-row>
+            </mat-table>
+        </div>
+        <div class="mat-table-container">
+            <mat-table [dataSource]="dataSourcePermisosDefault" class="mat-table-permisos-in">
+                <ng-container matColumnDef='nombreP'>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Permisos</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsNombre; sticky : true"></mat-header-row>
+                <mat-row (click)="seleccionarPermiso(row)" *matRowDef="let row; columns: displayedColumnsNombre;"
+                [ngClass]="{'mat-row-selected' : idPermisoDefaultSeleccionado == row.idPermiso}"></mat-row>
+            </mat-table>
+        </div>
+    </div><br>
+    <button mat-raised-button color="primary" (click)="concederPermiso()" type="button" [disabled]="evaluarConcederPermisoBoton()">Conceder Permiso</button>
+</div>

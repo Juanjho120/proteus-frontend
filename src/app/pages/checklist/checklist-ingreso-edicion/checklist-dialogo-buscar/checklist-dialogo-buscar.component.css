@@ -1,0 +1,65 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
+.mat-form-field-servicio {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.mat-form-field-placa {
+    margin-right: 25px;
+    width: 150px;
+}
+
+.mat-table {
+    width: 850px;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    justify-content: center!important;
+    background-color: blue;
+    color: white;
+}
+
+.mat-column-noChecklist {
+    flex : 0 0 90px;
+    justify-content: center!important;
+}
+
+.mat-column-checklistServicioTipo {
+    flex : 0 0 100px;
+    justify-content: center!important;
+}
+
+.mat-column-noServicio {
+    flex : 0 0 90px;
+    justify-content: center!important;
+}
+
+.mat-column-servicioTipo {
+    flex : 0 0 110px;
+    justify-content: center!important;
+}
+
+.mat-column-placa {
+    flex : 0 0 110px;
+    justify-content: center!important;
+}
+
+.mat-column-fechaIngreso {
+    flex : 0 0 150px;
+    justify-content: center!important;
+}
+
+.mat-column-fechaRevision {
+    justify-content: center!important;
+}
+
+.mat-row:hover {
+    background-color: aqua;
+    cursor: pointer;
+}

@@ -1,0 +1,6 @@
+<div>
+    <p>¿Eliminar la boleta No {{boleta.numero}} con depósito a la cuenta No {{boleta.cuentaBancaria.numero}} del banco {{boleta.cuentaBancaria.banco.nombre}}
+        por un monto de Q. {{boleta.monto.toFixed(2)}}?</p>
+</div>
+<button mat-raised-button color="primary" (click)="eliminar()">Eliminar</button>
+<button mat-raised-button color="warn" (click)="cerrar()">Cancelar</button>
